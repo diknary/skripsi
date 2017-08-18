@@ -1,0 +1,56 @@
+﻿@model MSSQLScreen.Models.UserAccount
+
+@{
+    ViewBag.Title = "Register";
+    Layout = "~/Views/Shared/_Layout_Login.cshtml";
+}
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group has-feedback">
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control", @placeholder = "Name" } })
+                @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group has-feedback">
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.NIP, new { htmlAttributes = new { @class = "form-control", @placeholder = "NIP" } })
+                @Html.ValidationMessageFor(model => model.NIP, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group has-feedback">
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Username, new { htmlAttributes = new { @class = "form-control", @placeholder = "Username" } })
+                @Html.ValidationMessageFor(model => model.Username, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group has-feedback">
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control", @placeholder = "Password" } })
+                @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group has-feedback">
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Privilege, new { htmlAttributes = new { @class = "form-control", @placeholder = "Privilege" } })
+                @Html.ValidationMessageFor(model => model.Privilege, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group has-feedback">
+            <div class="col-xs-4">
+                <input type="submit" value="Add" class="btn btn-primary btn-block btn-flat" />
+            </div>
+        </div>
+    </div>
+}

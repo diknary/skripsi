@@ -1,0 +1,59 @@
+﻿@model IEnumerable<MSSQLScreen.Models.JobActivity>
+@{
+    ViewBag.Title = "Job Activity";
+    Layout = "~/Views/Shared/_Layout_Job.cshtml";
+}
+
+
+<div class="box">
+    <div class="box-header">
+        <h3 class="box-title">Job Activity</h3>
+    </div>
+    <!-- /.box-header -->
+    <div class="box-body">
+        <div class="row">
+            <div class="col-sm-12">
+                <table id="jobtable" class="table table-bordered table-striped dataTable" role="grid" aria-describedby="jobtable_info">
+                    <thead>
+                        <tr class="active">
+                            <th><strong>Job Name</strong></th>
+                            <th><strong>Current Status</strong></th>
+                            <th><strong>IsEnabled</strong></th>
+                            <th><strong>Last Run Outcome</strong></th>
+                            <th><strong>Last Run</strong></th>
+                            <th><strong>Next Run</strong></th>
+                            <th><strong>Scheduled</strong></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var jobactivity in Model)
+                        {
+                            <tr>
+                                <td>@Html.ActionLink(jobactivity.Name, "JobHistory", "Job", new { id = jobactivity.Id }, null)</td>
+                                <td>@jobactivity.JobStatus</td>
+                                <td>@jobactivity.IsEnabled</td>
+                                <td>@jobactivity.LastRunOutcome</td>
+                                <td>@jobactivity.LastRun</td>
+                                <td>@jobactivity.NextRun</td>
+                                <td>@jobactivity.Scheduled</td>
+                            </tr>
+                        }
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <th><strong>Job Name</strong></th>
+                            <th><strong>Current Status</strong></th>
+                            <th><strong>IsEnabled</strong></th>
+                            <th><strong>Last Run Outcome</strong></th>
+                            <th><strong>Last Run</strong></th>
+                            <th><strong>Next Run</strong></th>
+                            <th><strong>Scheduled</strong></th>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- /.box-body -->

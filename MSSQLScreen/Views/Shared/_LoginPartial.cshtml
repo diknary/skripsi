@@ -1,0 +1,9 @@
+﻿@if (HttpContext.Current.User.Identity.IsAuthenticated)
+{
+    using (Html.BeginForm("Logout", "User", FormMethod.Post, new { id = "logoutForm" }))
+    {
+        <ul class="nav navbar-nav navbar-right">
+            <li> <a href="javascript:document.getElementById('logoutForm').submit()">Logout</a> </li>
+        </ul>
+    }
+}
