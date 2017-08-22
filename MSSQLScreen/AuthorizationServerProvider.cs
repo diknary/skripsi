@@ -3,6 +3,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using MSSQLScreen.Models;
 using System.Security.Claims;
+using Microsoft.Owin.Security;
+using System.Collections.Generic;
 
 namespace MSSQLScreen
 {
@@ -15,6 +17,16 @@ namespace MSSQLScreen
             _context = new ApplicationDbContext();
         }
 
+        public override Task TokenEndpoint(OAuthTokenEndpointContext context)
+        {
+            foreach (KeyValuePair<string, string> property in context.Properties.Dictionary)
+            {
+                context.AdditionalResponseParameters.Add(property.Key, property.Value);
+            }
+
+            return Task.FromResult<object>(null);
+        }
+
         public override async Task ValidateClientAuthentication(OAuthValidateClientAuthenticationContext client)
         {
             client.Validated();
@@ -24,17 +36,28 @@ namespace MSSQLScreen
         {
             var usrInDb = _context.UserAccounts.SingleOrDefault(c => c.Username == client.UserName && c.Password == client.Password);
             var identity = new ClaimsIdentity(client.Options.AuthenticationType);
+            
             if (usrInDb == null)
             {
-                client.SetError("invalid_grant", "Invalid username or password");
+                client.SetError("access_token", "null");
                 return;
             }
             else
             {
-                identity.AddClaim(new Claim(ClaimTypes.Role, usrInDb.Privilege));
-                identity.AddClaim(new Claim(ClaimTypes.Name, usrInDb.Username));
+                var props = new AuthenticationProperties(new Dictionary<string, string>
+                {
+                    {
+                        "name", usrInDb.Name
+                    },
+                    {
+                        "status", usrInDb.Privilege
+                    }
+
+                });
+                var ticket = new AuthenticationTicket(identity, props);
+                identity.AddClaim(new Claim(ClaimTypes.Name, usrInDb.Name));
                 identity.AddClaim(new Claim(ClaimTypes.NameIdentifier, usrInDb.Username));
-                client.Validated(identity);
+                client.Validated(ticket);
             }
         }
     }
