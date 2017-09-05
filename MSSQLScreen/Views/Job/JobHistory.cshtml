@@ -1,9 +1,12 @@
 ﻿@model IEnumerable<MSSQLScreen.Models.JobRunHistory>
 @{
+    var job_id = Request.Params["id"];
     ViewBag.Title = "JobHistory";
     Layout = "~/Views/Shared/_Layout_Job.cshtml";
 }
 
+
+@Html.ActionLink("Download Job History", "ToExcel", "Download", new { id = job_id }, new { @class = "btn btn-primary btn-flat"})
 <div class="box">
     <div class="box-header">
         <h3 class="box-title">Job Run History</h3>

@@ -12,7 +12,7 @@
                 <img src="/Content/img/report-256.png" class="img-responsive center-block">
                 <div class="row">
                     <div class="col-xs-8 col-xs-offset-2">
-                        @Html.ActionLink("Generate Job", "MigrateJob", "Jobs", new { @class = "btn btn-padding btn-md btn-primary center-block" })
+                        @Html.ActionLink("Job List", "MigrateJob", new { controller = "Job" }, new { @class = "btn btn-padding btn-md btn-primary center-block" })
                     </div>
                 </div>
             </div>
@@ -21,7 +21,7 @@
                 <img src="~/Content/img/usage-256.png" class="img-responsive center-block" />
                 <div class="row">
                     <div class="col-xs-8 col-xs-offset-2">
-                        @Html.ActionLink("CPU & Memory Usage", "CPUMemoryUsage", "Resources", new { @class = "btn btn-padding btn-md btn-primary center-block" })
+                        @Html.ActionLink("CPU & Memory Usage", "CPUMemoryUsage", new { controller = "Resource" }, new { @class = "btn btn-padding btn-md btn-primary center-block" })
                     </div>
                 </div>
             </div>
@@ -36,29 +36,38 @@ else
     <div class="vertical-center">
         <div class="row">
 
-            <div class="col-md-4">
+            <div class="col-md-3">
                 <img src="/Content/img/report-256.png" class="img-responsive center-block">
                 <div class="row">
-                    <div class="col-xs-8 col-xs-offset-2">
-                        @Html.ActionLink("Generate Job", "MigrateJob", "Jobs", new { @class = "btn btn-padding btn-md btn-primary center-block" })
+                    <div class="col-xs-12">
+                        @Html.ActionLink("Job List", "MigrateJob", new { controller = "Job" }, new { @class = "btn btn-padding btn-flat btn-primary center-block" })
                     </div>
                 </div>
             </div>
 
-            <div class="col-md-4">
+            <div class="col-md-3">
+                <img src="~/Content/img/user_list-256.png" class="img-responsive center-block">
+                <div class="row">
+                    <div class="col-xs-12">
+                        @Html.ActionLink("User List", "UserList", new { controller = "User" },new { @class = "btn btn-padding btn-flat btn-primary center-block" })
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-3">
                 <img src="~/Content/img/user-256.png" class="img-responsive center-block" />
                 <div class="row">
-                    <div class="col-xs-8 col-xs-offset-2">
-                        <a class="btn btn-padding btn-md btn-primary center-block" href="#myModal" data-toggle="modal">Add Administrator</a>
+                    <div class="col-xs-12">
+                        <a class="btn btn-padding btn-flat btn-primary center-block" href="#myModal" data-toggle="modal">Add Administrator</a>
                     </div>
                 </div>                
             </div>
 
-            <div class="col-md-4">
+            <div class="col-md-3">
                 <img src="~/Content/img/usage-256.png" class="img-responsive center-block" />
                 <div class="row">
-                    <div class="col-xs-8 col-xs-offset-2">
-                        @Html.ActionLink("CPU & Memory Usage", "CPUMemoryUsage", "Resources", new { @class = "btn btn-padding btn-md btn-primary center-block" })
+                    <div class="col-xs-12">
+                        @Html.ActionLink("CPU & Memory Usage", "CPUMemoryUsage", new { controller = "Resource" }, new { @class = "btn btn-padding btn-flat btn-primary center-block" })
                     </div>
                 </div>
             </div>

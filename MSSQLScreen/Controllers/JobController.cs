@@ -50,7 +50,6 @@ namespace MSSQLScreen.Controllers
         }
 
         // GET: Jobs
-        [Route("home/migrateJob")]
         public ActionResult MigrateJob()
         {
 
@@ -62,11 +61,11 @@ namespace MSSQLScreen.Controllers
             foreach (Job job in jobs)
             {
 
-                var jobactivityInDb = _context.JobActivities.SingleOrDefault(c => c.JobId == job.JobID.ToString());
+                var jobactivityInDb = _context.JobLists.SingleOrDefault(c => c.JobId == job.JobID.ToString());
 
                 if (jobactivityInDb == null)
                 {
-                    var jobactivity = new JobActivity
+                    var jobactivity = new JobList
                     {
                         JobId = job.JobID.ToString(),
                         Name = job.Name,
@@ -77,7 +76,7 @@ namespace MSSQLScreen.Controllers
                         NextRun = job.NextRunDate.ToString("yyyy-MM-dd HH:mm:ss:fff"),
                         Scheduled = job.HasSchedule
                     };
-                    _context.JobActivities.Add(jobactivity);
+                    _context.JobLists.Add(jobactivity);
                     _context.SaveChanges();
                 }
                 else
@@ -98,7 +97,6 @@ namespace MSSQLScreen.Controllers
         }
 
         [WebAuthorize]
-        [Route("job/jobActivity")]
         public ActionResult GetJob()
         {
             if (Session["Page"] != null)
@@ -110,13 +108,12 @@ namespace MSSQLScreen.Controllers
             else
             {
                 Session["Page"] = "refreshed";
-                var jobactivities = _context.JobActivities.ToList();
-                return View(jobactivities);
+                var JobLists = _context.JobLists.ToList();
+                return View(JobLists);
             }
         }
 
         [WebAuthorize]
-        [Route("job/jobHistory")]
         public ActionResult JobHistory(int id)
         {
 
@@ -130,7 +127,7 @@ namespace MSSQLScreen.Controllers
 
 
             //Insert job history from dbo.syshistory to MSSQLScreen table
-            var jobactivityInDb = _context.JobActivities.SingleOrDefault(c => c.Id == id);
+            var jobactivityInDb = _context.JobLists.SingleOrDefault(c => c.Id == id);
 
             ServerConnection conn = new ServerConnection(SqlServer);
             Server server = new Server(conn);

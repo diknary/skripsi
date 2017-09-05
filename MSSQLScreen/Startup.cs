@@ -13,6 +13,8 @@ namespace MSSQLScreen
     {
         public void Configuration(IAppBuilder app)
         {
+
+            //APIAuthorization
             app.UseCors(Microsoft.Owin.Cors.CorsOptions.AllowAll);
             var serverProvider = new AuthorizationServerProvider();
             OAuthAuthorizationServerOptions options = new OAuthAuthorizationServerOptions
@@ -33,7 +35,8 @@ namespace MSSQLScreen
             {
                 AuthenticationMode = AuthenticationMode.Active,
                 AuthenticationType = "ApplicationCookie",
-                ExpireTimeSpan = TimeSpan.FromDays(1),
+                LoginPath = new PathString("/user/login"),
+                ExpireTimeSpan = TimeSpan.FromMinutes(10),
             });
 
             //SignalR for Chart

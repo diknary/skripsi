@@ -45,6 +45,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="ExcelLibrary, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\ExcelLibrary.1.2011.7.31\lib\ExcelLibrary.dll</HintPath>
+    </Reference>
     <Reference Include="Highcharts.Web.Mvc, Version=5.0.6438.38415, Culture=neutral, PublicKeyToken=90b74bd27a557bd3, processorArchitecture=MSIL">
       <HintPath>..\packages\Highsoft.Highcharts.5.0.6438.38415\lib\net40\Highcharts.Web.Mvc.dll</HintPath>
     </Reference>
@@ -342,6 +345,7 @@
     <Compile Include="Controllers\API\JobController.cs" />
     <Compile Include="Controllers\API\ResourceController.cs" />
     <Compile Include="Controllers\API\UserController.cs" />
+    <Compile Include="Controllers\DownloadController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\JobController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
@@ -356,10 +360,22 @@
     <Compile Include="Migrations\201708181700152_FirsMigration.Designer.cs">
       <DependentUpon>201708181700152_FirsMigration.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201709051349574_RenameJobActivities.cs" />
+    <Compile Include="Migrations\201709051349574_RenameJobActivities.Designer.cs">
+      <DependentUpon>201709051349574_RenameJobActivities.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201709051355125_AddLastLogin.cs" />
+    <Compile Include="Migrations\201709051355125_AddLastLogin.Designer.cs">
+      <DependentUpon>201709051355125_AddLastLogin.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201709051633022_NullableDateTime.cs" />
+    <Compile Include="Migrations\201709051633022_NullableDateTime.Designer.cs">
+      <DependentUpon>201709051633022_NullableDateTime.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
-    <Compile Include="Models\JobActivity.cs" />
+    <Compile Include="Models\JobList.cs" />
     <Compile Include="Models\JobRunHistory.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\ResourceUsage.cs" />
@@ -1870,6 +1886,7 @@
     <Content Include="Content\css\font-awesome.css" />
     <Content Include="Content\css\font-awesome.min.css" />
     <Content Include="Content\fonts\fontawesome-webfont.svg" />
+    <Content Include="Content\img\user_list-256.png" />
     <Content Include="Content\img\report-128.png" />
     <Content Include="Content\img\report-256.png" />
     <Content Include="Content\img\usage-128.png" />
@@ -2336,10 +2353,12 @@
     <Content Include="Views\Shared\_Layout_Resource.cshtml" />
     <Content Include="Views\User\Login.cshtml" />
     <Content Include="Views\User\Register.cshtml" />
+    <Content Include="Views\User\UserList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Scripts\Highcharts-5.0.14\api\css\images\" />
+    <Folder Include="Views\Download\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
@@ -2347,6 +2366,15 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201708181700152_FirsMigration.resx">
       <DependentUpon>201708181700152_FirsMigration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201709051349574_RenameJobActivities.resx">
+      <DependentUpon>201709051349574_RenameJobActivities.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201709051355125_AddLastLogin.resx">
+      <DependentUpon>201709051355125_AddLastLogin.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201709051633022_NullableDateTime.resx">
+      <DependentUpon>201709051633022_NullableDateTime.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

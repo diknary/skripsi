@@ -2,7 +2,7 @@
 
 namespace MSSQLScreen.Models
 {
-    public class JobActivity
+    public class JobList
     {
         public int Id { get; set; }
 

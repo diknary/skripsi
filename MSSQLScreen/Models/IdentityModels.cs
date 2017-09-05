@@ -20,7 +20,7 @@ namespace MSSQLScreen.Models
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
-        public DbSet<JobActivity> JobActivities { get; set; }
+        public DbSet<JobList> JobLists { get; set; }
         public DbSet<JobRunHistory> JobRunHistories { get; set; }
         public DbSet<ResourceUsage> ResourceUsages { get; set; }
         public DbSet<UserAccount> UserAccounts { get; set; }

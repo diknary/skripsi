@@ -19,7 +19,7 @@ namespace MSSQLScreen.Models
 
         public string RunDate { get; set; }
 
-        public JobActivity JobActivity { get; set; }
+        public JobList JobActivity { get; set; }
 
         public int? JobActivityId { get; set; }
 

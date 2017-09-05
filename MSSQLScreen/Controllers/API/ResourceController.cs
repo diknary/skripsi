@@ -13,6 +13,9 @@ namespace MSSQLScreen.Controllers.API
             _context = new ApplicationDbContext();
         }
 
+        [APIAuthorize]
+        [HttpGet]
+        [Route("api/resource")]
         public IHttpActionResult GetResources()
         {
             var resourcesInDb = _context.ResourceUsages.SingleOrDefault();

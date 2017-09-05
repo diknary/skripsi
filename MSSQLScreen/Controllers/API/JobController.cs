@@ -52,7 +52,9 @@ namespace MSSQLScreen.Controllers.API
         }
 
         [APIAuthorize]
-        public IEnumerable<JobActivity> GetJob()
+        [HttpGet]
+        [Route("api/job/getjob")]
+        public IEnumerable<JobList> GetJob()
         {
             ServerConnection conn = new ServerConnection(SqlServer);
             Server server = new Server(conn);
@@ -62,11 +64,11 @@ namespace MSSQLScreen.Controllers.API
             foreach (Job job in jobs)
             {
 
-                var jobactivityInDb = _context.JobActivities.SingleOrDefault(c => c.JobId == job.JobID.ToString());
+                var jobactivityInDb = _context.JobLists.SingleOrDefault(c => c.JobId == job.JobID.ToString());
 
                 if (jobactivityInDb == null)
                 {
-                    var jobactivity = new JobActivity
+                    var jobactivity = new JobList
                     {
                         JobId = job.JobID.ToString(),
                         Name = job.Name,
@@ -77,7 +79,7 @@ namespace MSSQLScreen.Controllers.API
                         NextRun = job.NextRunDate.ToString("yyyy-MM-dd HH:mm:ss:fff"),
                         Scheduled = job.HasSchedule
                     };
-                    _context.JobActivities.Add(jobactivity);
+                    _context.JobLists.Add(jobactivity);
                     _context.SaveChanges();
                 }
                 else
@@ -94,10 +96,12 @@ namespace MSSQLScreen.Controllers.API
 
             }
 
-            return _context.JobActivities.ToList();
+            return _context.JobLists.ToList();
         }
 
         [APIAuthorize]
+        [HttpGet]
+        [Route("api/job/jobhistory/{id}")]
         public IEnumerable<JobRunHistory> GetJobHistory(int id)
         {
             //Delete job history in MSSQLScreen table
@@ -110,7 +114,7 @@ namespace MSSQLScreen.Controllers.API
 
 
             //Insert job history from dbo.syshistory to MSSQLScreen table
-            var jobactivityInDb = _context.JobActivities.SingleOrDefault(c => c.Id == id);
+            var jobactivityInDb = _context.JobLists.SingleOrDefault(c => c.Id == id);
 
             ServerConnection conn = new ServerConnection(SqlServer);
             Server server = new Server(conn);

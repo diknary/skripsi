@@ -15,10 +15,12 @@ namespace MSSQLScreen
 
             routes.MapMvcAttributeRoutes();
 
+            routes.LowercaseUrls = true;
+
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
-                defaults: new { controller = "User", action = "Login", id = UrlParameter.Optional }
+                defaults: new {controller = "User", action = "Login", id = UrlParameter.Optional}
             );
         }
     }

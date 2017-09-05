@@ -172,3 +172,7 @@ C:\Users\dikna\Documents\Visual Studio 2017\MSSQLScreen\MSSQLScreen\obj\Debug\MS
 C:\Users\dikna\Documents\Visual Studio 2017\MSSQLScreen\MSSQLScreen\bin\Microsoft.Owin.Cors.dll
 C:\Users\dikna\Documents\Visual Studio 2017\MSSQLScreen\MSSQLScreen\bin\System.Web.Cors.dll
 C:\Users\dikna\Documents\Visual Studio 2017\MSSQLScreen\MSSQLScreen\bin\Microsoft.Owin.Cors.xml
+C:\Users\dikna\Documents\Visual Studio 2017\MSSQLScreen\MSSQLScreen\bin\ExcelLibrary.dll
+C:\Users\dikna\Documents\Visual Studio 2017\MSSQLScreen\MSSQLScreen\obj\Debug\MSSQLScreen.Migrations.RenameJobActivities.resources
+C:\Users\dikna\Documents\Visual Studio 2017\MSSQLScreen\MSSQLScreen\obj\Debug\MSSQLScreen.Migrations.AddLastLogin.resources
+C:\Users\dikna\Documents\Visual Studio 2017\MSSQLScreen\MSSQLScreen\obj\Debug\MSSQLScreen.Migrations.NullableDateTime.resources

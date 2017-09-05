@@ -5,6 +5,7 @@ using MSSQLScreen.Models;
 using System.Security.Claims;
 using Microsoft.AspNet.Identity;
 using Microsoft.Owin.Security;
+using System;
 
 namespace MSSQLScreen.Controllers
 {
@@ -33,16 +34,18 @@ namespace MSSQLScreen.Controllers
             {
                 if (new ValidationManager().IsValid(user.Username, user.Password))
                 {
-                    var getUserRole = _context.UserAccounts.Single(c => c.Username == user.Username);
+                    var getUser = _context.UserAccounts.Single(c => c.Username == user.Username);
+                    getUser.LastLogin = DateTime.Now;
+                    _context.SaveChanges();
                     var identity = new ClaimsIdentity(
                         new[]
                         {
                             new Claim(ClaimTypes.NameIdentifier, user.Username),
                             new Claim(ClaimTypes.Name, user.Username),
-                            new Claim(ClaimTypes.Role, getUserRole.Privilege),
+                            new Claim(ClaimTypes.Role, getUser.Privilege),
                         },
                         DefaultAuthenticationTypes.ApplicationCookie);
-
+                    
                     HttpContext.GetOwinContext().Authentication.SignIn(new AuthenticationProperties { IsPersistent = user.RememberMe }, identity);
                     return RedirectToAction("Index", "Home");
                 }
@@ -56,7 +59,6 @@ namespace MSSQLScreen.Controllers
             return View();
         }
 
-        [Route("user/register")]
         public ActionResult Register()
         {
             return View();
@@ -91,6 +93,13 @@ namespace MSSQLScreen.Controllers
                 }
             }
             return RedirectToAction("Index", "Home");
+        }
+
+        [WebAuthorize]
+        public ActionResult UserList()
+        {
+            var userInDb = _context.UserAccounts.ToList();
+            return View(userInDb);
         }
 
         [WebAuthorize]

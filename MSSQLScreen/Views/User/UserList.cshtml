@@ -1,0 +1,45 @@
+﻿@model IEnumerable<MSSQLScreen.Models.UserAccount>
+@{
+    ViewBag.Title = "UserList";
+    Layout = "~/Views/Shared/_Layout_Job.cshtml";
+}
+
+<div class="box">
+    <div class="box-header">
+        <h3 class="box-title">Job Activity</h3>
+    </div>
+    <!-- /.box-header -->
+    <div class="box-body">
+        <div class="row">
+            <div class="col-sm-12">
+                <table id="jobtable" class="table table-bordered table-striped dataTable" role="grid" aria-describedby="jobtable_info">
+                    <thead>
+                        <tr class="active">
+                            <th><strong>Name</strong></th>
+                            <th><strong>Username</strong></th>
+                            <th><strong>Last Login</strong></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var userlist in Model)
+                        {
+                            <tr>
+                                <td>@userlist.Name</td>
+                                <td>@userlist.Username</td>
+                                <td>@userlist.LastLogin</td>
+                            </tr>
+                        }
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <th><strong>Name</strong></th>
+                            <th><strong>Username</strong></th>
+                            <th><strong>Last Login</strong></th>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+

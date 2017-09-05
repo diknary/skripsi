@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace MSSQLScreen.Models
 {
@@ -18,5 +19,7 @@ namespace MSSQLScreen.Models
         public string Password { get; set; }
 
         public string Privilege { get; set; }
+
+        public DateTime? LastLogin { get; set; }
     }
 }

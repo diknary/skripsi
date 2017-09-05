@@ -18,7 +18,17 @@ namespace MSSQLScreen.Controllers.API
         }
 
         [APIAuthorize]
+        [HttpGet]
+        [Route("api/user/userlist")]
+        public IEnumerable<UserAccount> UserList()
+        {
+            var userInDb = _context.UserAccounts.ToList();
+            return userInDb;
+        }
+
+        [APIAuthorize]
         [HttpPost]
+        [Route("api/user/manageadmin")]
         public IHttpActionResult ManageAdmin(UserAccount admin)
         {
             var usr = _context.UserAccounts.SingleOrDefault(c => c.Username == admin.Username);
@@ -35,5 +45,6 @@ namespace MSSQLScreen.Controllers.API
             ModelState.Remove("Password");
             return Ok();
         }
+
     }
 }
