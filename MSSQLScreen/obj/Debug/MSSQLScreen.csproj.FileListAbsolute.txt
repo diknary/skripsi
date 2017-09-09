@@ -175,3 +175,4 @@ C:\Users\dikna\Documents\Visual Studio 2017\MSSQLScreen\MSSQLScreen\obj\Debug\MS
 C:\Users\dikna\Documents\Visual Studio 2017\MSSQLScreen\MSSQLScreen\obj\Debug\MSSQLScreen.csproj.GenerateResource.Cache
 C:\Users\dikna\Documents\Visual Studio 2017\MSSQLScreen\MSSQLScreen\obj\Debug\MSSQLScreen.Migrations.SecondMigration.resources
 C:\Users\dikna\Documents\Visual Studio 2017\MSSQLScreen\MSSQLScreen\obj\Debug\MSSQLScreen.Migrations.AddAdminAccount.resources
+C:\Users\dikna\Documents\Visual Studio 2017\MSSQLScreen\MSSQLScreen\obj\Debug\MSSQLScreen.Migrations.LoginHistory.resources

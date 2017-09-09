@@ -25,6 +25,7 @@ namespace MSSQLScreen.Models
         public DbSet<ResourceUsage> ResourceUsages { get; set; }
         public DbSet<UserAccount> UserAccounts { get; set; }
         public DbSet<AdminAccount> AdminAccounts { get; set; }
+        public DbSet<LoginHistory> LoginHistories { get; set; }
         public ApplicationDbContext()
             : base("DefaultConnection", throwIfV1Schema: false)
         {

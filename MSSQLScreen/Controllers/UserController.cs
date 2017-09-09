@@ -18,6 +18,25 @@ namespace MSSQLScreen.Controllers
             _context = new ApplicationDbContext();
         }
 
+        private void CreateLoginHistory(int id)
+        {
+            var addloginhis = new LoginHistory
+            {
+                LoginDate = DateTime.Now,
+                AdminAccountId = id
+            };
+            _context.LoginHistories.Add(addloginhis);
+            _context.SaveChanges();
+        }
+
+        private void GetLastLogin(string username)
+        {
+            var getUser = _context.AdminAccounts.Single(c => c.Username == username);
+            var getLastLogin = _context.LoginHistories.OrderByDescending(c => c.AdminAccountId == getUser.Id).FirstOrDefault();
+            getUser.LastLogin = getLastLogin.LoginDate;
+            _context.SaveChanges();
+        }
+
         // GET: User
         public ActionResult Login()
         {
@@ -35,7 +54,6 @@ namespace MSSQLScreen.Controllers
                 if (new ValidationManager().IsValid(user.Username, user.Password))
                 {
                     var getUser = _context.AdminAccounts.Single(c => c.Username == user.Username);
-                    _context.SaveChanges();
                     var identity = new ClaimsIdentity(
                         new[]
                         {
@@ -46,6 +64,11 @@ namespace MSSQLScreen.Controllers
                         DefaultAuthenticationTypes.ApplicationCookie);
                     
                     HttpContext.GetOwinContext().Authentication.SignIn(new AuthenticationProperties { IsPersistent = user.RememberMe }, identity);
+
+                    CreateLoginHistory(getUser.Id);
+
+                    GetLastLogin(user.Username);
+
                     return RedirectToAction("Index", "Home");
                 }
                 else
@@ -78,7 +101,7 @@ namespace MSSQLScreen.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult ManageAdmin(AddAdminViewModel admin)
+        public ActionResult AddAdmin(AddAdminViewModel admin)
         {
             var usr = _context.UserAccounts.SingleOrDefault(c => c.Username == admin.Username);
             var adm = _context.AdminAccounts.SingleOrDefault(c => c.Username == admin.Username);
@@ -110,9 +133,17 @@ namespace MSSQLScreen.Controllers
         [WebAuthorize]
         public ActionResult UserList()
         {
-            var userInDb = _context.UserAccounts.ToList();
+            var userInDb = _context.AdminAccounts.ToList();
             return View(userInDb);
         }
+
+        [WebAuthorize]
+        public ActionResult LoginHistory(int id)
+        {
+            var loginhistory = _context.LoginHistories.Where(c => c.AdminAccountId == id).ToList();
+            return View(loginhistory);
+        }
+
 
         [WebAuthorize]
         [HttpPost]

@@ -22,7 +22,7 @@
                 <img src="~/Content/img/user_list-256.png" class="img-responsive center-block">
                 <div class="row">
                     <div class="col-xs-12">
-                        @Html.ActionLink("User List", "UserList", new { controller = "User" }, new { @class = "btn btn-padding btn-flat btn-primary center-block" })
+                        @Html.ActionLink("Admin List", "UserList", new { controller = "User" }, new { @class = "btn btn-padding btn-flat btn-primary center-block" })
                     </div>
                 </div>
             </div>
@@ -81,7 +81,7 @@ else
 
 
 
-@using (Html.BeginForm("ManageAdmin", "User"))
+@using (Html.BeginForm("AddAdmin", "User"))
 {
     @Html.AntiForgeryToken()
     <div class="form-horizontal">

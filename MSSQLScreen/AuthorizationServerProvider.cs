@@ -5,6 +5,7 @@ using MSSQLScreen.Models;
 using System.Security.Claims;
 using Microsoft.Owin.Security;
 using System.Collections.Generic;
+using System;
 
 namespace MSSQLScreen
 {
@@ -15,6 +16,26 @@ namespace MSSQLScreen
         public AuthorizationServerProvider()
         {
             _context = new ApplicationDbContext();
+        }
+
+        private void CreateLoginHistory(int id)
+        {
+            var addloginhis = new LoginHistory
+            {
+                LoginDate = DateTime.Now,
+                AdminAccountId = id
+            };
+            _context.LoginHistories.Add(addloginhis);
+            _context.SaveChanges();
+
+        }
+
+        private void GetLastLogin(string username)
+        {
+            var getUser = _context.AdminAccounts.Single(c => c.Username == username);
+            var getLastLogin = _context.LoginHistories.OrderByDescending(c => c.AdminAccountId == getUser.Id).FirstOrDefault();
+            getUser.LastLogin = getLastLogin.LoginDate;
+            _context.SaveChanges();
         }
 
         public override Task TokenEndpoint(OAuthTokenEndpointContext context)
@@ -55,9 +76,12 @@ namespace MSSQLScreen
 
                 });
                 var ticket = new AuthenticationTicket(identity, props);
+                
                 identity.AddClaim(new Claim(ClaimTypes.Name, usrInDb.Name));
                 identity.AddClaim(new Claim(ClaimTypes.NameIdentifier, usrInDb.Username));
                 client.Validated(ticket);
+                CreateLoginHistory(usrInDb.Id);
+                GetLastLogin(client.UserName);
             }
         }
     }

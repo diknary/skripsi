@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
 
 namespace MSSQLScreen.Models
 {
@@ -10,6 +13,6 @@ namespace MSSQLScreen.Models
 
         public AdminAccount AdminAccount { get; set; }
 
-        public int? AdminAccountID { get; set; }
+        public int? AdminAccountId { get; set; }
     }
 }

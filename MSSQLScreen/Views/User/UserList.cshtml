@@ -1,4 +1,4 @@
-﻿@model IEnumerable<MSSQLScreen.Models.UserAccount>
+﻿@model IEnumerable<MSSQLScreen.Models.AdminAccount>
 @{
     ViewBag.Title = "UserList";
     Layout = "~/Views/Shared/_Layout_Job.cshtml";
@@ -24,7 +24,7 @@
                         @foreach (var userlist in Model)
                         {
                             <tr>
-                                <td>@userlist.Name</td>
+                                <td>@Html.ActionLink(userlist.Name, "LoginHistory", new { controller = "User", id = userlist.Id}, null)</td>
                                 <td>@userlist.Username</td>
                                 <td>@userlist.LastLogin</td>
                             </tr>

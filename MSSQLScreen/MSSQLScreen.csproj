@@ -368,6 +368,10 @@
     <Compile Include="Migrations\201709090511300_AddAdminAccount.Designer.cs">
       <DependentUpon>201709090511300_AddAdminAccount.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201709090616148_LoginHistory.cs" />
+    <Compile Include="Migrations\201709090616148_LoginHistory.Designer.cs">
+      <DependentUpon>201709090616148_LoginHistory.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\AddAdminViewModel.cs" />
@@ -375,6 +379,7 @@
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\JobList.cs" />
     <Compile Include="Models\JobRunHistory.cs" />
+    <Compile Include="Models\LoginHistory.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\ResourceUsage.cs" />
     <Compile Include="Models\UserAccount.cs" />
@@ -2352,6 +2357,7 @@
     <Content Include="Views\User\Login.cshtml" />
     <Content Include="Views\User\Register.cshtml" />
     <Content Include="Views\User\UserList.cshtml" />
+    <Content Include="Views\User\LoginHistory.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -2370,6 +2376,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201709090511300_AddAdminAccount.resx">
       <DependentUpon>201709090511300_AddAdminAccount.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201709090616148_LoginHistory.resx">
+      <DependentUpon>201709090616148_LoginHistory.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
