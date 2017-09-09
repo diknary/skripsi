@@ -64,11 +64,11 @@ namespace MSSQLScreen.Controllers.API
             foreach (Job job in jobs)
             {
 
-                var jobactivityInDb = _context.JobLists.SingleOrDefault(c => c.JobId == job.JobID.ToString());
+                var joblistInDb = _context.JobLists.SingleOrDefault(c => c.JobId == job.JobID.ToString());
 
-                if (jobactivityInDb == null)
+                if (joblistInDb == null)
                 {
-                    var jobactivity = new JobList
+                    var joblist = new JobList
                     {
                         JobId = job.JobID.ToString(),
                         Name = job.Name,
@@ -79,17 +79,17 @@ namespace MSSQLScreen.Controllers.API
                         NextRun = job.NextRunDate.ToString("yyyy-MM-dd HH:mm:ss:fff"),
                         Scheduled = job.HasSchedule
                     };
-                    _context.JobLists.Add(jobactivity);
+                    _context.JobLists.Add(joblist);
                     _context.SaveChanges();
                 }
                 else
                 {
-                    jobactivityInDb.IsEnabled = job.IsEnabled;
-                    jobactivityInDb.JobStatus = job.CurrentRunStatus.ToString();
-                    jobactivityInDb.LastRunOutcome = job.LastRunOutcome.ToString();
-                    jobactivityInDb.LastRun = job.LastRunDate.ToString("yyyy-MM-dd HH:mm:ss:fff");
-                    jobactivityInDb.NextRun = job.NextRunDate.ToString("yyyy-MM-dd HH:mm:ss:fff");
-                    jobactivityInDb.Scheduled = job.HasSchedule;
+                    joblistInDb.IsEnabled = job.IsEnabled;
+                    joblistInDb.JobStatus = job.CurrentRunStatus.ToString();
+                    joblistInDb.LastRunOutcome = job.LastRunOutcome.ToString();
+                    joblistInDb.LastRun = job.LastRunDate.ToString("yyyy-MM-dd HH:mm:ss:fff");
+                    joblistInDb.NextRun = job.NextRunDate.ToString("yyyy-MM-dd HH:mm:ss:fff");
+                    joblistInDb.Scheduled = job.HasSchedule;
                     _context.SaveChanges();
 
                 }
@@ -105,7 +105,7 @@ namespace MSSQLScreen.Controllers.API
         public IEnumerable<JobRunHistory> GetJobHistory(int id)
         {
             //Delete job history in MSSQLScreen table
-            var jobhistoryInDb = _context.JobRunHistories.Where(c => c.JobActivityId == id).ToList();
+            var jobhistoryInDb = _context.JobRunHistories.Where(c => c.JobListId == id).ToList();
             foreach (var jobhis in jobhistoryInDb)
             {
                 _context.JobRunHistories.Remove(jobhis);
@@ -114,11 +114,11 @@ namespace MSSQLScreen.Controllers.API
 
 
             //Insert job history from dbo.syshistory to MSSQLScreen table
-            var jobactivityInDb = _context.JobLists.SingleOrDefault(c => c.Id == id);
+            var joblistInDb = _context.JobLists.SingleOrDefault(c => c.Id == id);
 
             ServerConnection conn = new ServerConnection(SqlServer);
             Server server = new Server(conn);
-            var job = server.JobServer.Jobs[jobactivityInDb.Name];
+            var job = server.JobServer.Jobs[joblistInDb.Name];
             job.Refresh();
 
             var jobfilter = new JobHistoryFilter();
@@ -128,9 +128,9 @@ namespace MSSQLScreen.Controllers.API
             {
                 var jobrunhistory = new JobRunHistory
                 {
-                    JobId = jobactivityInDb.JobId,
+                    JobId = joblistInDb.JobId,
                     RunDate = row["RunDate"].ToString(),
-                    JobActivityId = jobactivityInDb.Id,
+                    JobListId = joblistInDb.Id,
                     StepName = row["StepName"].ToString(),
                     StepId = Convert.ToInt32(row["StepId"]),
                     Duration = RunDuration(Convert.ToInt32(row["RunDuration"])),
@@ -140,7 +140,7 @@ namespace MSSQLScreen.Controllers.API
                 _context.SaveChanges();
 
             }
-            return _context.JobRunHistories.Where(c => c.JobActivityId == id).Include(c => c.JobActivity).ToList();
+            return _context.JobRunHistories.Where(c => c.JobListId == id).Include(c => c.JobList).ToList();
         }
 
     }

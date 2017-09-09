@@ -7,13 +7,13 @@ namespace MSSQLScreen.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
-    public sealed partial class NullableDateTime : IMigrationMetadata
+    public sealed partial class LoginHistoryAndAdmin : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(NullableDateTime));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(LoginHistoryAndAdmin));
         
         string IMigrationMetadata.Id
         {
-            get { return "201709051633022_NullableDateTime"; }
+            get { return "201709081547297_LoginHistoryAndAdmin"; }
         }
         
         string IMigrationMetadata.Source

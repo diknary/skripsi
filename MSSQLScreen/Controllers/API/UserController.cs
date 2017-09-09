@@ -27,23 +27,32 @@ namespace MSSQLScreen.Controllers.API
         }
 
         [APIAuthorize]
-        [HttpPost]
+        [HttpPut]
         [Route("api/user/manageadmin")]
-        public IHttpActionResult ManageAdmin(UserAccount admin)
+        public void ManageAdmin(AddAdminViewModel admin)
         {
             var usr = _context.UserAccounts.SingleOrDefault(c => c.Username == admin.Username);
-            if (ModelState.IsValid)
+            var adm = _context.AdminAccounts.SingleOrDefault(c => c.Username == admin.Username);
+            if (!ModelState.IsValid)
+                throw new HttpResponseException(HttpStatusCode.BadRequest);
+            if (usr == null)
+                throw new HttpResponseException(HttpStatusCode.NotFound);
+            if (adm != null)
+                throw new HttpResponseException(HttpStatusCode.Ambiguous);
+            else
             {
-                if (usr == null)
-                    throw new HttpResponseException(HttpStatusCode.NotFound);
-                else
+                var addadmin = new AdminAccount
                 {
-                    usr.Privilege = admin.Privilege;
-                    _context.SaveChanges();
-                }
+                    Name = usr.Name,
+                    NIP = usr.NIP,
+                    Username = usr.Username,
+                    Password = usr.Password,
+                    Privilege = "ADMIN"
+                };
+                _context.AdminAccounts.Add(addadmin);
+                _context.SaveChanges();
             }
-            ModelState.Remove("Password");
-            return Ok();
+
         }
 
     }

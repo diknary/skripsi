@@ -7,13 +7,13 @@ namespace MSSQLScreen.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
-    public sealed partial class FirsMigration : IMigrationMetadata
+    public sealed partial class SecondMigration : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(FirsMigration));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(SecondMigration));
         
         string IMigrationMetadata.Id
         {
-            get { return "201708181700152_FirsMigration"; }
+            get { return "201709090454326_SecondMigration"; }
         }
         
         string IMigrationMetadata.Source

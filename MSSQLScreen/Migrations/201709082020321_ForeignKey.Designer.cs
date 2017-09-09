@@ -7,13 +7,13 @@ namespace MSSQLScreen.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
-    public sealed partial class AddLastLogin : IMigrationMetadata
+    public sealed partial class ForeignKey : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(AddLastLogin));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(ForeignKey));
         
         string IMigrationMetadata.Id
         {
-            get { return "201709051355125_AddLastLogin"; }
+            get { return "201709082020321_ForeignKey"; }
         }
         
         string IMigrationMetadata.Source

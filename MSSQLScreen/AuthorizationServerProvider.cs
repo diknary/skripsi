@@ -34,7 +34,7 @@ namespace MSSQLScreen
 
         public override async Task GrantResourceOwnerCredentials(OAuthGrantResourceOwnerCredentialsContext client)
         {
-            var usrInDb = _context.UserAccounts.SingleOrDefault(c => c.Username == client.UserName && c.Password == client.Password);
+            var usrInDb = _context.AdminAccounts.SingleOrDefault(c => c.Username == client.UserName && c.Password == client.Password);
             var identity = new ClaimsIdentity(client.Options.AuthenticationType);
             
             if (usrInDb == null)

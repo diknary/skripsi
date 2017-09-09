@@ -356,24 +356,22 @@
     </Compile>
     <Compile Include="Hubs\ChartDataUpdate.cs" />
     <Compile Include="Hubs\ChartHub.cs" />
-    <Compile Include="Migrations\201708181700152_FirsMigration.cs" />
-    <Compile Include="Migrations\201708181700152_FirsMigration.Designer.cs">
-      <DependentUpon>201708181700152_FirsMigration.cs</DependentUpon>
+    <Compile Include="Migrations\201709090430402_FirstMigration.cs" />
+    <Compile Include="Migrations\201709090430402_FirstMigration.Designer.cs">
+      <DependentUpon>201709090430402_FirstMigration.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201709051349574_RenameJobActivities.cs" />
-    <Compile Include="Migrations\201709051349574_RenameJobActivities.Designer.cs">
-      <DependentUpon>201709051349574_RenameJobActivities.cs</DependentUpon>
+    <Compile Include="Migrations\201709090454326_SecondMigration.cs" />
+    <Compile Include="Migrations\201709090454326_SecondMigration.Designer.cs">
+      <DependentUpon>201709090454326_SecondMigration.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201709051355125_AddLastLogin.cs" />
-    <Compile Include="Migrations\201709051355125_AddLastLogin.Designer.cs">
-      <DependentUpon>201709051355125_AddLastLogin.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201709051633022_NullableDateTime.cs" />
-    <Compile Include="Migrations\201709051633022_NullableDateTime.Designer.cs">
-      <DependentUpon>201709051633022_NullableDateTime.cs</DependentUpon>
+    <Compile Include="Migrations\201709090511300_AddAdminAccount.cs" />
+    <Compile Include="Migrations\201709090511300_AddAdminAccount.Designer.cs">
+      <DependentUpon>201709090511300_AddAdminAccount.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\AddAdminViewModel.cs" />
+    <Compile Include="Models\AdminAccount.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\JobList.cs" />
     <Compile Include="Models\JobRunHistory.cs" />
@@ -2364,17 +2362,14 @@
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201708181700152_FirsMigration.resx">
-      <DependentUpon>201708181700152_FirsMigration.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201709090430402_FirstMigration.resx">
+      <DependentUpon>201709090430402_FirstMigration.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201709051349574_RenameJobActivities.resx">
-      <DependentUpon>201709051349574_RenameJobActivities.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201709090454326_SecondMigration.resx">
+      <DependentUpon>201709090454326_SecondMigration.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201709051355125_AddLastLogin.resx">
-      <DependentUpon>201709051355125_AddLastLogin.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201709051633022_NullableDateTime.resx">
-      <DependentUpon>201709051633022_NullableDateTime.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201709090511300_AddAdminAccount.resx">
+      <DependentUpon>201709090511300_AddAdminAccount.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

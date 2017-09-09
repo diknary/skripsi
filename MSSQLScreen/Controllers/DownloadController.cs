@@ -26,8 +26,8 @@ namespace MSSQLScreen.Controllers
             ds.Locale = System.Threading.Thread.CurrentThread.CurrentCulture;
             dt.Locale = System.Threading.Thread.CurrentThread.CurrentCulture;
 
-            var jobhistoryInDb = _context.JobRunHistories.Where(c => c.JobActivityId == id);
-            var jobactivityInDb = _context.JobLists.Single(c => c.Id == id);
+            var jobhistoryInDb = _context.JobRunHistories.Where(c => c.JobListId == id);
+            var joblistInDb = _context.JobLists.Single(c => c.Id == id);
             dt.Columns.Add("Id", typeof(System.Int32));
             dt.Columns.Add("JobId", typeof(System.String));
             dt.Columns.Add("StepId", typeof(System.Int32));
@@ -52,7 +52,7 @@ namespace MSSQLScreen.Controllers
             ds.Tables.Add(dt);
 
             Directory.CreateDirectory(HttpRuntime.AppDomainAppPath + "DownloadableFiles");
-            string filePath = HttpRuntime.AppDomainAppPath + "DownloadableFiles" + "/" + jobactivityInDb.Name + ".xls";
+            string filePath = HttpRuntime.AppDomainAppPath + "DownloadableFiles" + "/" + joblistInDb.Name + ".xls";
             FileInfo file = new FileInfo(filePath);
             if (file.Exists)
             {

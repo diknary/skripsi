@@ -34,15 +34,14 @@ namespace MSSQLScreen.Controllers
             {
                 if (new ValidationManager().IsValid(user.Username, user.Password))
                 {
-                    var getUser = _context.UserAccounts.Single(c => c.Username == user.Username);
-                    getUser.LastLogin = DateTime.Now;
+                    var getUser = _context.AdminAccounts.Single(c => c.Username == user.Username);
                     _context.SaveChanges();
                     var identity = new ClaimsIdentity(
                         new[]
                         {
                             new Claim(ClaimTypes.NameIdentifier, user.Username),
                             new Claim(ClaimTypes.Name, user.Username),
-                            new Claim(ClaimTypes.Role, getUser.Privilege),
+                            //new Claim(ClaimTypes.Role, getUser.Privilege),
                         },
                         DefaultAuthenticationTypes.ApplicationCookie);
                     
@@ -79,16 +78,29 @@ namespace MSSQLScreen.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult ManageAdmin(UserAccount admin)
+        public ActionResult ManageAdmin(AddAdminViewModel admin)
         {
             var usr = _context.UserAccounts.SingleOrDefault(c => c.Username == admin.Username);
+            var adm = _context.AdminAccounts.SingleOrDefault(c => c.Username == admin.Username);
             if (ModelState.IsValid)
             {
                 if (usr == null)
                     ModelState.AddModelError("", "Username is not found");
+                else if (adm != null)
+                {
+                    ModelState.AddModelError("", "Admin is already exist");
+                }
                 else
                 {
-                    usr.Privilege = admin.Privilege;
+                    var addadmin = new AdminAccount
+                    {
+                        Name = usr.Name,
+                        NIP = usr.NIP,
+                        Username = usr.Username,
+                        Password = usr.Password,
+                        Privilege = "ADMIN"
+                    };
+                    _context.AdminAccounts.Add(addadmin);
                     _context.SaveChanges();
                 }
             }
