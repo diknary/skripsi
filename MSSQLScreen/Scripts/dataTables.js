@@ -1,3 +1,5 @@
 ﻿$(function () {
-    $('#jobtable').DataTable()
+    $('#jobtable').DataTable({
+        'info': false
+    })
 })

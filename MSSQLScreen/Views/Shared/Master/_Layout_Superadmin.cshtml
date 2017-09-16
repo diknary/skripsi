@@ -1,0 +1,67 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title</title>
+    @Styles.Render("~/Content/css")
+    @Styles.Render("~/Job/css")
+    @Scripts.Render("~/bundles/modernizr")
+</head>
+<body class="hold-transition skin-blue sidebar-mini">
+    <!-- Site wrapper -->
+    <div class="wrapper">
+
+        @Html.Partial("~/Views/Shared/Partial/_Header.cshtml")
+
+        @Html.Partial("~/Views/Shared/Partial/_Sidebar-Superadmin.cshtml")
+
+        @{Html.RenderPartial("~/Views/Shared/Partial/_Modal-Addadmin.cshtml", new ViewDataDictionary() );}
+        @{Html.RenderPartial("~/Views/Shared/Partial/_Modal-AddServer.cshtml", new ViewDataDictionary());}
+             
+        <!-- Content Wrapper. Contains page content -->
+        <div class="content-wrapper">
+            <!-- Content Header (Page header) -->
+            <section class="content-header">
+                <ol class="breadcrumb">
+                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                    @if (ViewContext.RouteData.Values["controller"].ToString() != "home")
+                    {
+                        <li>@Html.ActionLink(ViewContext.RouteData.Values["controller"].ToString(), "Index", ViewContext.RouteData.Values["controller"].ToString())</li>
+}
+                    @if (ViewContext.RouteData.Values["action"].ToString() != "index")
+                    {
+                        <li>@Html.ActionLink(ViewContext.RouteData.Values["action"].ToString(), ViewContext.RouteData.Values["action"].ToString(), ViewContext.RouteData.Values["controller"].ToString())</li>
+}
+                </ol>
+            </section>
+
+            <section class="content">
+
+                @RenderBody()
+
+            </section>
+        </div>
+        <!-- /.content-wrapper -->
+
+        <footer class="main-footer">
+            &copy; @DateTime.Now.Year - MSSQLScreen
+            <br />&copy; Icons made by <a href="http://www.flaticon.com/authors/vectors-market" title="Vectors Market">Vectors Market</a> from <a href="http://www.flaticon.com" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a>
+            <br />&copy; Icons made by <a href="http://www.flaticon.com/authors/dinosoftlabs" title="DinosoftLabs">DinosoftLabs</a> from <a href="http://www.flaticon.com" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a>
+        </footer>
+
+
+    </div>
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/job")
+    @Scripts.Render("~/bundles/adminLTE")
+    @RenderSection("scripts", required: false)
+    @if (TempData["errmsg"] != null)
+    {
+        Html.RenderPartial("~/Views/Shared/Partial/_Modal-Error.cshtml", TempData["errmsg"]);
+    }
+    
+</body>
+</html>

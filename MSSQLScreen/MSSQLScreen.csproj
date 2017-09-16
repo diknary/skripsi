@@ -350,6 +350,7 @@
     <Compile Include="Controllers\JobController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\ResourceController.cs" />
+    <Compile Include="Controllers\ServerController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -372,9 +373,22 @@
     <Compile Include="Migrations\201709090616148_LoginHistory.Designer.cs">
       <DependentUpon>201709090616148_LoginHistory.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201709151516060_AddServerList.cs" />
+    <Compile Include="Migrations\201709151516060_AddServerList.Designer.cs">
+      <DependentUpon>201709151516060_AddServerList.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201709151659268_AddForeignKey.cs" />
+    <Compile Include="Migrations\201709151659268_AddForeignKey.Designer.cs">
+      <DependentUpon>201709151659268_AddForeignKey.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201709151821013_AddForeignKeyJobList.cs" />
+    <Compile Include="Migrations\201709151821013_AddForeignKeyJobList.Designer.cs">
+      <DependentUpon>201709151821013_AddForeignKeyJobList.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\AddAdminViewModel.cs" />
+    <Compile Include="Models\AddServerViewModel.cs" />
     <Compile Include="Models\AdminAccount.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\JobList.cs" />
@@ -382,6 +396,7 @@
     <Compile Include="Models\LoginHistory.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\ResourceUsage.cs" />
+    <Compile Include="Models\ServerList.cs" />
     <Compile Include="Models\UserAccount.cs" />
     <Compile Include="Models\UserLoginViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -1889,6 +1904,8 @@
     <Content Include="Content\css\font-awesome.css" />
     <Content Include="Content\css\font-awesome.min.css" />
     <Content Include="Content\fonts\fontawesome-webfont.svg" />
+    <Content Include="Content\img\user_icon-32.png" />
+    <Content Include="Content\img\user_list-128.png" />
     <Content Include="Content\img\user_list-256.png" />
     <Content Include="Content\img\report-128.png" />
     <Content Include="Content\img\report-256.png" />
@@ -2358,11 +2375,18 @@
     <Content Include="Views\User\Register.cshtml" />
     <Content Include="Views\User\UserList.cshtml" />
     <Content Include="Views\User\LoginHistory.cshtml" />
+    <Content Include="Views\Shared\Master\_Layout_Superadmin.cshtml" />
+    <Content Include="Views\Shared\Partial\_Header.cshtml" />
+    <Content Include="Views\Shared\Partial\_Sidebar-Superadmin.cshtml" />
+    <Content Include="Views\Shared\Partial\_Modal-Addadmin.cshtml" />
+    <Content Include="Views\Shared\Partial\_Modal-Addserver.cshtml" />
+    <Content Include="Views\Shared\Partial\_Modal-Error.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Scripts\Highcharts-5.0.14\api\css\images\" />
     <Folder Include="Views\Download\" />
+    <Folder Include="Views\Server\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
@@ -2379,6 +2403,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201709090616148_LoginHistory.resx">
       <DependentUpon>201709090616148_LoginHistory.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201709151516060_AddServerList.resx">
+      <DependentUpon>201709151516060_AddServerList.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201709151659268_AddForeignKey.resx">
+      <DependentUpon>201709151659268_AddForeignKey.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201709151821013_AddForeignKeyJobList.resx">
+      <DependentUpon>201709151821013_AddForeignKeyJobList.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

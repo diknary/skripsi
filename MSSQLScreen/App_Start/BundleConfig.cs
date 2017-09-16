@@ -42,8 +42,6 @@ namespace MSSQLScreen
                         ));
 
             bundles.Add(new ScriptBundle("~/bundles/resource").Include(
-                        //"~/Scripts/Highcharts-5.0.14/code/highchart.js",
-                        //"~/Scripts/Highcharts-5.0.14/code/modules/exporting.js",
                         "~/Scripts/cpuChart.js",
                         "~/Scripts/memoryChart.js",
                         "~/Scripts/hubConn.js",
@@ -55,7 +53,8 @@ namespace MSSQLScreen
                       "~/Content/Site.css",
                       "~/Content/css/font-awesome.min.css",
                       "~/admin-lte/plugins/Ionicons/css/ionicons.min.css",
-                      "~/admin-lte/css/AdminLTE.css"
+                      "~/admin-lte/css/AdminLTE.css",
+                      "~/admin-lte/css/skins/_all-skins.min.css"
                       ));
 
             bundles.Add(new StyleBundle("~/Login/css").Include(

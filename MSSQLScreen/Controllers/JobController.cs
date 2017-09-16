@@ -7,13 +7,12 @@ using Microsoft.SqlServer.Management.Smo;
 using Microsoft.SqlServer.Management.Common;
 using Microsoft.SqlServer.Management.Smo.Agent;
 using MSSQLScreen.Models;
+using System.Data.SqlClient;
 
 namespace MSSQLScreen.Controllers
 {
     public class JobController : Controller
     {
-        static readonly string SqlServer = @"DESKTOP-PQD9KKN";
-
         private ApplicationDbContext _context;
 
         public JobController()
@@ -52,8 +51,10 @@ namespace MSSQLScreen.Controllers
         // GET: Jobs
         public ActionResult MigrateJob()
         {
-
-            ServerConnection conn = new ServerConnection(SqlServer);
+            string IP = Session["IPAddress"].ToString();
+            var getserver = _context.ServerLists.SingleOrDefault(c => c.IPAddress == IP );
+            SqlConnection sql = new SqlConnection("server=" + getserver.IPAddress + ";" + "user id=" + getserver.UserId + ";" + "password=" + getserver.Password + ";");
+            ServerConnection conn = new ServerConnection(sql);
             Server server = new Server(conn);
             JobCollection jobs = server.JobServer.Jobs;
             jobs.Refresh();
@@ -74,7 +75,8 @@ namespace MSSQLScreen.Controllers
                         LastRunOutcome = job.LastRunOutcome.ToString(),
                         LastRun = job.LastRunDate.ToString("yyyy-MM-dd HH:mm:ss:fff"),
                         NextRun = job.NextRunDate.ToString("yyyy-MM-dd HH:mm:ss:fff"),
-                        Scheduled = job.HasSchedule
+                        Scheduled = job.HasSchedule,
+                        ServerListId = getserver.Id
                     };
                     _context.JobLists.Add(joblist);
                     _context.SaveChanges();
@@ -99,18 +101,10 @@ namespace MSSQLScreen.Controllers
         [WebAuthorize]
         public ActionResult GetJob()
         {
-            if (Session["Page"] != null)
-            {
-                Session["Page"] = null;
-                return RedirectToAction("MigrateJob", "Job");
-
-            }
-            else
-            {
-                Session["Page"] = "refreshed";
-                var JobLists = _context.JobLists.ToList();
-                return View(JobLists);
-            }
+            string IP = Session["IPAddress"].ToString();
+            var getserver = _context.ServerLists.SingleOrDefault(c => c.IPAddress == IP);
+            var JobLists = _context.JobLists.Where(c => c.ServerListId == getserver.Id).ToList();
+            return View(JobLists);
         }
 
         [WebAuthorize]
@@ -129,7 +123,10 @@ namespace MSSQLScreen.Controllers
             //Insert job history from dbo.syshistory to MSSQLScreen table
             var joblistInDb = _context.JobLists.SingleOrDefault(c => c.Id == id);
 
-            ServerConnection conn = new ServerConnection(SqlServer);
+            string IP = Session["IPAddress"].ToString();
+            var getserver = _context.ServerLists.SingleOrDefault(c => c.IPAddress == IP);
+            SqlConnection sql = new SqlConnection("server=" + getserver.IPAddress + ";" + "user id=" + getserver.UserId + ";" + "password=" + getserver.Password + ";");
+            ServerConnection conn = new ServerConnection(sql);
             Server server = new Server(conn);
             var job = server.JobServer.Jobs[joblistInDb.Name];
             job.Refresh();

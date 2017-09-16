@@ -18,5 +18,6 @@ namespace MSSQLScreen
             BundleConfig.RegisterBundles(BundleTable.Bundles);
             AntiForgeryConfig.UniqueClaimTypeIdentifier = ClaimTypes.NameIdentifier;
         }
+
     }
 }

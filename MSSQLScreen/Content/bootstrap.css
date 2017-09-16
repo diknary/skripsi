@@ -6581,4 +6581,14 @@ button.close {
     display: none !important;
   }
 }
+
+.modal-header-danger {
+    color: #fff;
+    background-color: #d9534f;
+}
+
+.modal-body-danger {
+    color: #fff;
+    background-color: #d9534f;
+}
 /*# sourceMappingURL=bootstrap.css.map */

@@ -36,7 +36,7 @@ namespace MSSQLScreen
                 AuthenticationMode = AuthenticationMode.Active,
                 AuthenticationType = "ApplicationCookie",
                 LoginPath = new PathString("/user/login"),
-                ExpireTimeSpan = TimeSpan.FromMinutes(10),
+                ExpireTimeSpan = TimeSpan.FromMinutes(30),
             });
 
             //SignalR for Chart

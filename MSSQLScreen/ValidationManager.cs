@@ -14,7 +14,7 @@ namespace MSSQLScreen
 
         public bool IsValid(string username, string password)
         {
-            return _context.UserAccounts.Any(c => c.Username == username && c.Password == password);
+            return _context.AdminAccounts.Any(c => c.Username == username && c.Password == password);
         }
     }
 }

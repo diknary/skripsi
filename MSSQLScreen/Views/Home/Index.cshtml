@@ -1,119 +1,38 @@
-﻿@model MSSQLScreen.Models.UserAccount
+﻿@model IEnumerable<MSSQLScreen.Models.ServerList>
 @{
     ViewBag.Title = "Home Page";
-    Layout = "~/Views/Shared/_Layout_Home.cshtml";
+    Layout = "~/Views/Shared/Master/_Layout_Superadmin.cshtml";
 }
 
-@if (User.IsInRole("SUPERADMIN"))
-{
-    <div class="vertical-center">
+<div class="box box-primary">
+    <div class="box-header">
+        <h3 class="box-title">Job List</h3>
+    </div>
+    <!-- /.box-header -->
+    <div class="box-body">
         <div class="row">
-
-            <div class="col-md-3">
-                <img src="/Content/img/report-256.png" class="img-responsive center-block">
-                <div class="row">
-                    <div class="col-xs-12">
-                        @Html.ActionLink("Job List", "MigrateJob", new { controller = "Job" }, new { @class = "btn btn-padding btn-flat btn-primary center-block" })
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-3">
-                <img src="~/Content/img/user_list-256.png" class="img-responsive center-block">
-                <div class="row">
-                    <div class="col-xs-12">
-                        @Html.ActionLink("Admin List", "UserList", new { controller = "User" }, new { @class = "btn btn-padding btn-flat btn-primary center-block" })
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-3">
-                <img src="~/Content/img/user-256.png" class="img-responsive center-block" />
-                <div class="row">
-                    <div class="col-xs-12">
-                        <a class="btn btn-padding btn-flat btn-primary center-block" href="#myModal" data-toggle="modal">Add Administrator</a>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-3">
-                <img src="~/Content/img/usage-256.png" class="img-responsive center-block" />
-                <div class="row">
-                    <div class="col-xs-12">
-                        @Html.ActionLink("CPU & Memory Usage", "CPUMemoryUsage", new { controller = "Resource" }, new { @class = "btn btn-padding btn-flat btn-primary center-block" })
-                    </div>
-                </div>
-            </div>
-
-        </div>
-
-    </div>
-
-}
-else
-{
-    <div class="vertical-center">
-            <div class="row">
-                <div class="col-md-6">
-                    <img src="/Content/img/report-256.png" class="img-responsive center-block">
-                    <div class="row">
-                        <div class="col-xs-8 col-xs-offset-2">
-                            @Html.ActionLink("Job List", "MigrateJob", new { controller = "Job" }, new { @class = "btn btn-padding btn-md btn-primary center-block" })
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-md-6">
-                    <img src="~/Content/img/usage-256.png" class="img-responsive center-block" />
-                    <div class="row">
-                        <div class="col-xs-8 col-xs-offset-2">
-                            @Html.ActionLink("CPU & Memory Usage", "CPUMemoryUsage", new { controller = "Resource" }, new { @class = "btn btn-padding btn-md btn-primary center-block" })
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-
-        </div>
-
-}
-
-
-
-
-@using (Html.BeginForm("AddAdmin", "User"))
-{
-    @Html.AntiForgeryToken()
-    <div class="form-horizontal">
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-
-        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title" id="myModalLabel">Add Administrator</h4>
-                    </div>
-                    <div class="modal-body">
-
-
-                        <div class="form-group has-feedback">
-                            <div class="col-md-4">
-                                @Html.LabelFor(model => model.Username)
-                            </div>
-                            <div class="col-md-8">
-                                @Html.EditorFor(model => model.Username, new { htmlAttributes = new { @class = "form-control" } })
-                                @Html.ValidationMessageFor(model => model.Username, "", new { @class = "text-danger" })
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary ">Add</button>
-                </div>
+            <div class="col-sm-12">
+                <table id="jobtable" class="table table-bordered table-striped dataTable" role="grid" aria-describedby="jobtable_info">
+                    <thead>
+                        <tr class="active">
+                            <th><strong>IP Address</strong></th>
+                            <th></th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var server in Model)
+                        {
+                            <tr>
+                                <td>@server.IPAddress</td>
+                                <td>@Html.ActionLink("Connect", "Connect", new { controller = "Server", id = server.Id}, new { @class = "btn btn-sm btn-primary"})</td>
+                                <td>@Html.ActionLink("Remove", "Remove", new { controller = "Server", id = server.Id }, new { @class = "btn btn-sm btn-primary" })</td>
+                            </tr>
+                        }
+                    </tbody>
+                    
+                </table>
             </div>
         </div>
     </div>
-}   
+</div>

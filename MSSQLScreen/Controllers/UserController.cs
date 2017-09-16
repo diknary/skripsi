@@ -32,9 +32,16 @@ namespace MSSQLScreen.Controllers
         private void GetLastLogin(string username)
         {
             var getUser = _context.AdminAccounts.Single(c => c.Username == username);
-            var getLastLogin = _context.LoginHistories.OrderByDescending(c => c.AdminAccountId == getUser.Id).FirstOrDefault();
+            var getLastLogin = _context.LoginHistories.Where(c => c.AdminAccountId == getUser.Id).OrderByDescending(c => c.Id).FirstOrDefault();
             getUser.LastLogin = getLastLogin.LoginDate;
             _context.SaveChanges();
+        }
+
+        [WebAuthorize]
+        public ActionResult Index()
+        {
+            var userInDb = _context.AdminAccounts.ToList();
+            return View(userInDb);
         }
 
         // GET: User
@@ -58,8 +65,8 @@ namespace MSSQLScreen.Controllers
                         new[]
                         {
                             new Claim(ClaimTypes.NameIdentifier, user.Username),
-                            new Claim(ClaimTypes.Name, user.Username),
-                            //new Claim(ClaimTypes.Role, getUser.Privilege),
+                            new Claim(ClaimTypes.Name, getUser.Name),
+                            new Claim(ClaimTypes.Role, getUser.Privilege),
                         },
                         DefaultAuthenticationTypes.ApplicationCookie);
                     
@@ -77,7 +84,6 @@ namespace MSSQLScreen.Controllers
                     return View();
                 }
             }
-            ModelState.Remove("Password");
             return View();
         }
 
@@ -108,11 +114,9 @@ namespace MSSQLScreen.Controllers
             if (ModelState.IsValid)
             {
                 if (usr == null)
-                    ModelState.AddModelError("", "Username is not found");
-                else if (adm != null)
-                {
-                    ModelState.AddModelError("", "Admin is already exist");
-                }
+                    TempData["errmsg"] = "Username is not found";
+                else if (adm != null)              
+                    TempData["errmsg"] = "Admin is already exist";               
                 else
                 {
                     var addadmin = new AdminAccount
@@ -126,21 +130,20 @@ namespace MSSQLScreen.Controllers
                     _context.AdminAccounts.Add(addadmin);
                     _context.SaveChanges();
                 }
+                return RedirectToAction("Index", "Home");
             }
-            return RedirectToAction("Index", "Home");
-        }
+            else
+            {
+                TempData["errmsg"] = "Field cannot be blank";
+                return RedirectToAction("Index", "Home");
+            }
 
-        [WebAuthorize]
-        public ActionResult UserList()
-        {
-            var userInDb = _context.AdminAccounts.ToList();
-            return View(userInDb);
         }
 
         [WebAuthorize]
         public ActionResult LoginHistory(int id)
         {
-            var loginhistory = _context.LoginHistories.Where(c => c.AdminAccountId == id).ToList();
+            var loginhistory = _context.LoginHistories.Where(c => c.AdminAccountId == id).OrderBy(c => c.Id).ToList();
             return View(loginhistory);
         }
 
@@ -150,17 +153,6 @@ namespace MSSQLScreen.Controllers
         public ActionResult Logout()
         {
             HttpContext.GetOwinContext().Authentication.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
-
-            //// clear authentication cookie
-            //HttpCookie cookie1 = new HttpCookie(FormsAuthentication.FormsCookieName, "");
-            //cookie1.Expires = DateTime.Now.AddYears(-1);
-            //Response.Cookies.Add(cookie1);
-
-            //// clear session cookie (not necessary for your current problem but i would recommend you do it anyway)
-            //SessionStateSection sessionStateSection = (SessionStateSection)WebConfigurationManager.GetSection("system.web/sessionState");
-            //HttpCookie cookie2 = new HttpCookie(sessionStateSection.CookieName, "");
-            //cookie2.Expires = DateTime.Now.AddYears(-1);
-            //Response.Cookies.Add(cookie2);
             return RedirectToAction("Login", "User");
         }
     }

@@ -33,7 +33,7 @@ namespace MSSQLScreen
         private void GetLastLogin(string username)
         {
             var getUser = _context.AdminAccounts.Single(c => c.Username == username);
-            var getLastLogin = _context.LoginHistories.OrderByDescending(c => c.AdminAccountId == getUser.Id).FirstOrDefault();
+            var getLastLogin = _context.LoginHistories.Where(c => c.AdminAccountId == getUser.Id).OrderByDescending(c => c.Id).FirstOrDefault();
             getUser.LastLogin = getLastLogin.LoginDate;
             _context.SaveChanges();
         }
