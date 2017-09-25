@@ -76,7 +76,7 @@ namespace MSSQLScreen.Controllers
                         LastRun = job.LastRunDate.ToString("yyyy-MM-dd HH:mm:ss:fff"),
                         NextRun = job.NextRunDate.ToString("yyyy-MM-dd HH:mm:ss:fff"),
                         Scheduled = job.HasSchedule,
-                        ServerListId = getserver.Id
+                        ServerListId = getserver.Id,
                     };
                     _context.JobLists.Add(joblist);
                     _context.SaveChanges();
@@ -112,13 +112,9 @@ namespace MSSQLScreen.Controllers
         {
 
             //Delete job history in MSSQLScreen table
-            var jobhistoryInDb = _context.JobRunHistories.Where(c => c.JobListId == id).ToList();
-            foreach (var jobhis in jobhistoryInDb)
-            {
-                _context.JobRunHistories.Remove(jobhis);
-                _context.SaveChanges();
-            }
-
+            var jobhistoryInDb = _context.JobRunHistories.Where(c => c.JobListId == id);
+            _context.JobRunHistories.RemoveRange(jobhistoryInDb);
+            _context.SaveChanges();
 
             //Insert job history from dbo.syshistory to MSSQLScreen table
             var joblistInDb = _context.JobLists.SingleOrDefault(c => c.Id == id);

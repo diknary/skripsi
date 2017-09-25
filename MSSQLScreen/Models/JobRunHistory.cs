@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace MSSQLScreen.Models
 {
@@ -18,6 +19,8 @@ namespace MSSQLScreen.Models
         public string RunOutcome { get; set; }
 
         public string RunDate { get; set; }
+
+        public string ResourceId { get; set; }
 
         public JobList JobList { get; set; }
 

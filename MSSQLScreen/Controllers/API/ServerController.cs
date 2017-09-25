@@ -1,17 +1,14 @@
-﻿using Microsoft.SqlServer.Management.Common;
-using Microsoft.SqlServer.Management.Smo;
-using Microsoft.SqlServer.Management.Smo.Agent;
-using MSSQLScreen.Models;
+﻿using MSSQLScreen.Models;
 using System;
-using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Net;
 using System.Security.Claims;
-using System.Web.Mvc;
+using System.Web.Http;
 
-namespace MSSQLScreen.Controllers
+namespace MSSQLScreen.Controllers.API
 {
-    public class ServerController : Controller
+    public class ServerController : ApiController
     {
         private ApplicationDbContext _context;
 
@@ -37,16 +34,10 @@ namespace MSSQLScreen.Controllers
             }
         }
 
-        [WebAuthorize]
-        public ActionResult Index()
-        {
-            return View();
-        }
-
-        [WebAuthorize]
+        [APIAuthorize]
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Connect(AddServerViewModel server)
+        [Route("api/server/connect")]
+        public IHttpActionResult Connect(AddServerViewModel server)
         {
             if (ModelState.IsValid)
             {
@@ -61,8 +52,7 @@ namespace MSSQLScreen.Controllers
                         getserver.UserId = server.UserId;
                         getserver.Password = server.Password;
                         _context.SaveChanges();
-                        Session["IPAddress"] = server.IPAddress;
-                        return RedirectToAction("MigrateJob", "Job");
+                        return StatusCode(HttpStatusCode.Accepted);
                     }
                     else
                     {
@@ -76,35 +66,30 @@ namespace MSSQLScreen.Controllers
 
                         _context.ServerLists.Add(addserver);
                         _context.SaveChanges();
-                        Session["IPAddress"] = server.IPAddress;
-                        return RedirectToAction("MigrateJob", "Job");
-                    }  
-                    
+                        return StatusCode(HttpStatusCode.Accepted);
+                    }
+
                 }
                 else
                 {
-                    TempData["errmsg"] = "Login failed";
-                    return RedirectToAction("Index", "Home");
+                    throw new HttpResponseException(HttpStatusCode.NotAcceptable);
                 }
-                    
+
             }
             else
             {
-                TempData["errmsg"] = "Field cannot be blank";
-                return RedirectToAction("Index", "Home");
+                throw new HttpResponseException(HttpStatusCode.BadRequest);
             }
-            
         }
 
-        [WebAuthorize]
-        [Route("server/remove/{server_id}/{admin_id}")]
-        public ActionResult Remove(int server_id, int admin_id)
+        [APIAuthorize]
+        [HttpDelete]
+        [Route("api/server/remove/{server_id}/{admin_id}")]
+        public void Remove(int server_id, int admin_id)
         {
             var getserver = _context.ServerLists.Single(c => c.Id == server_id && c.AdminAccountId == admin_id);
             _context.ServerLists.Remove(getserver);
             _context.SaveChanges();
-            return RedirectToAction("Index", "Home");
         }
-
     }
 }

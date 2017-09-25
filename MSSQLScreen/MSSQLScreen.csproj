@@ -344,6 +344,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\API\JobController.cs" />
     <Compile Include="Controllers\API\ResourceController.cs" />
+    <Compile Include="Controllers\API\ServerController.cs" />
     <Compile Include="Controllers\API\UserController.cs" />
     <Compile Include="Controllers\DownloadController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -384,6 +385,22 @@
     <Compile Include="Migrations\201709151821013_AddForeignKeyJobList.cs" />
     <Compile Include="Migrations\201709151821013_AddForeignKeyJobList.Designer.cs">
       <DependentUpon>201709151821013_AddForeignKeyJobList.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201709241138063_AdminIDInJobList.cs" />
+    <Compile Include="Migrations\201709241138063_AdminIDInJobList.Designer.cs">
+      <DependentUpon>201709241138063_AdminIDInJobList.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201709241328034_FK.cs" />
+    <Compile Include="Migrations\201709241328034_FK.Designer.cs">
+      <DependentUpon>201709241328034_FK.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201709250557199_CascadeOnDelete.cs" />
+    <Compile Include="Migrations\201709250557199_CascadeOnDelete.Designer.cs">
+      <DependentUpon>201709250557199_CascadeOnDelete.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201709250616228_CascadeOnDeleteServerList.cs" />
+    <Compile Include="Migrations\201709250616228_CascadeOnDeleteServerList.Designer.cs">
+      <DependentUpon>201709250616228_CascadeOnDeleteServerList.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -1904,6 +1921,10 @@
     <Content Include="Content\css\font-awesome.css" />
     <Content Include="Content\css\font-awesome.min.css" />
     <Content Include="Content\fonts\fontawesome-webfont.svg" />
+    <Content Include="Content\img\ipb-128.png" />
+    <Content Include="Content\img\ipb-16.png" />
+    <Content Include="Content\img\ipb-300.png" />
+    <Content Include="Content\img\ipb-32.png" />
     <Content Include="Content\img\user_icon-32.png" />
     <Content Include="Content\img\user_list-128.png" />
     <Content Include="Content\img\user_list-256.png" />
@@ -2373,7 +2394,7 @@
     <Content Include="Views\Shared\_Layout_Resource.cshtml" />
     <Content Include="Views\User\Login.cshtml" />
     <Content Include="Views\User\Register.cshtml" />
-    <Content Include="Views\User\UserList.cshtml" />
+    <Content Include="Views\User\Index.cshtml" />
     <Content Include="Views\User\LoginHistory.cshtml" />
     <Content Include="Views\Shared\Master\_Layout_Superadmin.cshtml" />
     <Content Include="Views\Shared\Partial\_Header.cshtml" />
@@ -2412,6 +2433,18 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201709151821013_AddForeignKeyJobList.resx">
       <DependentUpon>201709151821013_AddForeignKeyJobList.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201709241138063_AdminIDInJobList.resx">
+      <DependentUpon>201709241138063_AdminIDInJobList.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201709241328034_FK.resx">
+      <DependentUpon>201709241328034_FK.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201709250557199_CascadeOnDelete.resx">
+      <DependentUpon>201709250557199_CascadeOnDelete.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201709250616228_CascadeOnDeleteServerList.resx">
+      <DependentUpon>201709250616228_CascadeOnDeleteServerList.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -25,5 +25,6 @@ namespace MSSQLScreen.Models
         public ServerList ServerList { get; set; }
 
         public int? ServerListId { get; set; }
+
     }
 }

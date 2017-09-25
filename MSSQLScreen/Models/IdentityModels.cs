@@ -27,6 +27,24 @@ namespace MSSQLScreen.Models
         public DbSet<AdminAccount> AdminAccounts { get; set; }
         public DbSet<LoginHistory> LoginHistories { get; set; }
         public DbSet<ServerList> ServerLists { get; set; }
+
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<ServerList>()
+                .HasOptional(c => c.AdminAccount)
+                .WithMany()
+                .WillCascadeOnDelete(true);
+            modelBuilder.Entity<JobList>()
+                .HasRequired(c => c.ServerList)
+                .WithMany()
+                .WillCascadeOnDelete(true);
+            modelBuilder.Entity<JobRunHistory>()
+                .HasRequired(c => c.JobList)
+                .WithMany()
+                .WillCascadeOnDelete(true);
+            base.OnModelCreating(modelBuilder);
+        }
+
         public ApplicationDbContext()
             : base("DefaultConnection", throwIfV1Schema: false)
         {

@@ -1,38 +1,46 @@
 ﻿@model IEnumerable<MSSQLScreen.Models.ServerList>
 @{
-    ViewBag.Title = "Home Page";
+    ViewBag.Title = "Server List";
     Layout = "~/Views/Shared/Master/_Layout_Superadmin.cshtml";
 }
 
-<div class="box box-primary">
-    <div class="box-header">
-        <h3 class="box-title">Job List</h3>
-    </div>
-    <!-- /.box-header -->
-    <div class="box-body">
-        <div class="row">
-            <div class="col-sm-12">
-                <table id="jobtable" class="table table-bordered table-striped dataTable" role="grid" aria-describedby="jobtable_info">
-                    <thead>
-                        <tr class="active">
-                            <th><strong>IP Address</strong></th>
-                            <th></th>
-                            <th></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (var server in Model)
-                        {
-                            <tr>
-                                <td>@server.IPAddress</td>
-                                <td>@Html.ActionLink("Connect", "Connect", new { controller = "Server", id = server.Id}, new { @class = "btn btn-sm btn-primary"})</td>
-                                <td>@Html.ActionLink("Remove", "Remove", new { controller = "Server", id = server.Id }, new { @class = "btn btn-sm btn-primary" })</td>
+@using (Html.BeginForm("Connect", "Server"))
+{
+    @Html.AntiForgeryToken()
+    <div class="box box-primary">
+        <div class="box-header">
+            <h3 class="box-title">Server List</h3>
+        </div>
+        <!-- /.box-header -->
+        <div class="box-body">
+            <div class="row">
+                <div class="col-sm-12">
+                    <table id="jobtable" class="table table-bordered table-striped dataTable" role="grid" aria-describedby="jobtable_info">
+                        <thead>
+                            <tr class="active">
+                                <th><strong>IP Address</strong></th>
+                                <th></th>
+                                <th></th>
                             </tr>
-                        }
-                    </tbody>
+                        </thead>
+                        <tbody>
+                            @foreach (var server in Model)
+                            {
+                                <tr>
+                                    <td>@server.IPAddress</td>
+                                    <td><button type="submit" class="btn btn-sm btn-primary">Connect</button></td>
+                                    <td>@Html.ActionLink("Remove", "Remove", new { controller = "Server", server_id = server.Id, admin_id = server.AdminAccountId }, new { @class = "btn btn-sm btn-primary" })</td>
+                                    @Html.HiddenFor(c => server.IPAddress)
+                                    @Html.HiddenFor(c => server.UserId)
+                                    @Html.HiddenFor(c => server.Password)
+                                </tr>
+                                }
+                        </tbody>
                     
-                </table>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
-</div>
+
+}
