@@ -53,8 +53,8 @@ namespace MSSQLScreen.Controllers
                 if (ValidateConnection(server.IPAddress, server.UserId, server.Password))
                 {
                     var identity = (ClaimsIdentity)User.Identity;
-                    int userId = Int32.Parse(((ClaimsIdentity)User.Identity).Claims.FirstOrDefault(c => c.Type == "UserId").Value);
-                    var getadmin = _context.AdminAccounts.SingleOrDefault(c => c.Id == userId);
+                    int adminId = Int32.Parse(((ClaimsIdentity)User.Identity).Claims.FirstOrDefault(c => c.Type == "AdminId").Value);
+                    var getadmin = _context.AdminAccounts.SingleOrDefault(c => c.Id == adminId);
                     var getserver = _context.ServerLists.SingleOrDefault(c => c.IPAddress == server.IPAddress);
                     if (getserver != null)
                     {

@@ -71,6 +71,9 @@ namespace MSSQLScreen
                         "name", usrInDb.Name
                     },
                     {
+                        "admin_id", usrInDb.Id.ToString()
+                    },
+                    {
                         "status", usrInDb.Privilege
                     }
 

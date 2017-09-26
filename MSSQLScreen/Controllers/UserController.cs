@@ -67,7 +67,7 @@ namespace MSSQLScreen.Controllers
                             new Claim(ClaimTypes.NameIdentifier, user.Username),
                             new Claim(ClaimTypes.Name, getUser.Name),
                             new Claim(ClaimTypes.Role, getUser.Privilege),
-                            new Claim("UserId", getUser.Id.ToString())
+                            new Claim("AdminId", getUser.Id.ToString())
                         },
                         DefaultAuthenticationTypes.ApplicationCookie);
                     
