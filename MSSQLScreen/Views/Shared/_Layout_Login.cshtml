@@ -1,6 +1,7 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
+    <link rel="shortcut icon" type="image/x-icon" href="~/Content/img/ipb-16.ico" />
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title</title>
@@ -9,12 +10,26 @@
     @Scripts.Render("~/bundles/modernizr")
 </head>
 <body class="hold-transition login-page">
+    
     <div class="login-box">
         <div class="login-logo">
-            <a href="../../index2.html"><b>MSSQL</b>Screen</a>
+            <div class="row">
+                <div class="col-md-4" style="padding-right: 0px;">
+                    <div class="vertical-center">
+                        <img src="/Content/img/ipb-128.png" class="img-responsive center-block">
+                    </div>
+                </div>
+
+                <div class="col-md-8" style="padding-left: 0px;">
+                    <div style="height: 110px;line-height: 110px;text-align: center;">
+                        <b>MSSQL</b>Screen
+                    </div>
+                </div>
+
+            </div>          
         </div>
         <div class="login-box-body">
-            <p class="login-box-msg">Sign in to start your session</p>
+            <p class="login-box-msg">Log in to start your session</p>
             <!-- /.login-logo -->
             @RenderBody()
         </div>

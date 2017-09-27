@@ -2,9 +2,11 @@
     <!-- Logo -->
     <a href="{{ url('/home') }}" class="logo">
         <!-- mini logo for sidebar mini 50x50 pixels -->
-        <span class="logo-mini"><b>SQL</b>Screen</span>
+        <span class="logo-mini"><img src="~/Content/img/ipb-32.png"></span>
         <!-- logo for regular state and mobile devices -->
-        <span class="logo-lg"><b>MSSQLScreen</b></span>
+        <div class="logo-lg">
+            <img src="~/Content/img/ipb-32.png" style="padding-right: 10px;"><b>MSSQLScreen</b>
+        </div>
     </a>
     <!-- Header Navbar -->
     <nav class="navbar navbar-static-top" role="navigation">
@@ -35,9 +37,6 @@
                             </li>
                             <!-- Menu Footer-->
                             <li class="user-footer">
-                                <div class="pull-left">
-                                    <a href="#" class="btn btn-default btn-flat">Profile</a>
-                                </div>
                                 @using (Html.BeginForm("Logout", "User", FormMethod.Post, new { id = "logoutForm" }))
                                 {
                                     <div class="pull-right">
