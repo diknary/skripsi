@@ -82,6 +82,7 @@ namespace MSSQLScreen
                 
                 identity.AddClaim(new Claim(ClaimTypes.Name, usrInDb.Name));
                 identity.AddClaim(new Claim(ClaimTypes.NameIdentifier, usrInDb.Username));
+                identity.AddClaim(new Claim("AdminId", usrInDb.Id.ToString()));
                 client.Validated(ticket);
                 CreateLoginHistory(usrInDb.Id);
                 GetLastLogin(client.UserName);
