@@ -8,6 +8,7 @@ using Microsoft.SqlServer.Management.Common;
 using Microsoft.SqlServer.Management.Smo.Agent;
 using MSSQLScreen.Models;
 using System.Data.SqlClient;
+using System.Security.Claims;
 
 namespace MSSQLScreen.Controllers
 {
@@ -48,11 +49,13 @@ namespace MSSQLScreen.Controllers
             return duration;
         }
 
-        // GET: Jobs
-        public ActionResult MigrateJob()
+        [WebAuthorize]
+        //[Route("job/migratejob/{ip_address}")]
+        public ActionResult MigrateJob(string IP)
         {
-            string IP = Session["IPAddress"].ToString();
-            var getserver = _context.ServerLists.SingleOrDefault(c => c.IPAddress == IP );
+            var identity = (ClaimsIdentity)User.Identity;
+            int adminId = Int32.Parse(((ClaimsIdentity)User.Identity).Claims.FirstOrDefault(c => c.Type == "AdminId").Value);
+            var getserver = _context.ServerLists.SingleOrDefault(c => c.IPAddress == IP);
             SqlConnection sql = new SqlConnection("server=" + getserver.IPAddress + ";" + "user id=" + getserver.UserId + ";" + "password=" + getserver.Password + ";");
             ServerConnection conn = new ServerConnection(sql);
             Server server = new Server(conn);
@@ -95,32 +98,31 @@ namespace MSSQLScreen.Controllers
 
             }
 
-            return RedirectToAction("GetJob", "Job");
+            return RedirectToAction("GetJob", "Job", new { server_id = getserver.Id });
         }
 
         [WebAuthorize]
-        public ActionResult GetJob()
+        //[Route("job/getjob/{server_id}")]
+        public ActionResult GetJob(int server_id)
         {
-            string IP = Session["IPAddress"].ToString();
-            var getserver = _context.ServerLists.SingleOrDefault(c => c.IPAddress == IP);
-            var JobLists = _context.JobLists.Where(c => c.ServerListId == getserver.Id).ToList();
+            var JobLists = _context.JobLists.Where(c => c.ServerListId == server_id).ToList();
             return View(JobLists);
         }
 
         [WebAuthorize]
-        public ActionResult JobHistory(int id)
+        //[Route("job/jobhistory/{server_id}/{job_id}")]
+        public ActionResult JobHistory(int server_id, int job_id)
         {
 
             //Delete job history in MSSQLScreen table
-            var jobhistoryInDb = _context.JobRunHistories.Where(c => c.JobListId == id);
+            var jobhistoryInDb = _context.JobRunHistories.Where(c => c.JobListId == job_id);
             _context.JobRunHistories.RemoveRange(jobhistoryInDb);
             _context.SaveChanges();
 
             //Insert job history from dbo.syshistory to MSSQLScreen table
-            var joblistInDb = _context.JobLists.SingleOrDefault(c => c.Id == id);
+            var joblistInDb = _context.JobLists.SingleOrDefault(c => c.Id == job_id);
 
-            string IP = Session["IPAddress"].ToString();
-            var getserver = _context.ServerLists.SingleOrDefault(c => c.IPAddress == IP);
+            var getserver = _context.ServerLists.SingleOrDefault(c => c.Id == server_id);
             SqlConnection sql = new SqlConnection("server=" + getserver.IPAddress + ";" + "user id=" + getserver.UserId + ";" + "password=" + getserver.Password + ";");
             ServerConnection conn = new ServerConnection(sql);
             Server server = new Server(conn);
@@ -147,7 +149,7 @@ namespace MSSQLScreen.Controllers
 
             }
             //Pass data from MSSQLScreen table job history to view
-            var viewjobrunhistory = _context.JobRunHistories.Where(c => c.JobListId == id).Include(c => c.JobList).ToList();
+            var viewjobrunhistory = _context.JobRunHistories.Where(c => c.JobListId == job_id).Include(c => c.JobList).ToList();
 
             return View(viewjobrunhistory);
 

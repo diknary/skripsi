@@ -30,10 +30,6 @@ namespace MSSQLScreen.Models
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<ServerList>()
-                .HasOptional(c => c.AdminAccount)
-                .WithMany()
-                .WillCascadeOnDelete(true);
             modelBuilder.Entity<JobList>()
                 .HasRequired(c => c.ServerList)
                 .WithMany()

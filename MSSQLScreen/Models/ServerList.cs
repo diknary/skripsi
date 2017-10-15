@@ -15,9 +15,5 @@ namespace MSSQLScreen.Models
         [Required]
         [DataType(DataType.Password)]
         public string Password { get; set; }
-
-        public AdminAccount AdminAccount { get; set; }
-
-        public int? AdminAccountId { get; set; }
     }
 }

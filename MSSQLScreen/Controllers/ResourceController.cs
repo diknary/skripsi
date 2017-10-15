@@ -16,8 +16,7 @@ namespace MSSQLScreen.Controllers
         [WebAuthorize]
         public ActionResult CPUMemoryUsage()
         {
-            var resourceInDb = _context.ResourceUsages.SingleOrDefault();
-            return View(resourceInDb);
+            return View();
         }
     }
 }

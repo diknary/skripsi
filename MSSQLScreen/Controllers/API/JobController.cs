@@ -8,13 +8,12 @@ using Microsoft.SqlServer.Management.Smo;
 using Microsoft.SqlServer.Management.Common;
 using Microsoft.SqlServer.Management.Smo.Agent;
 using MSSQLScreen.Models;
+using System.Data.SqlClient;
 
 namespace MSSQLScreen.Controllers.API
 {
     public class JobController : ApiController
     {
-        static readonly string SqlServer = @"DESKTOP-PQD9KKN";
-
         private ApplicationDbContext _context;
 
         public JobController()
@@ -53,10 +52,12 @@ namespace MSSQLScreen.Controllers.API
 
         [APIAuthorize]
         [HttpGet]
-        [Route("api/job/getjob")]
-        public IEnumerable<JobList> GetJob()
+        [Route("api/job/{server_id}")]
+        public IEnumerable<JobList> GetJob(int server_id)
         {
-            ServerConnection conn = new ServerConnection(SqlServer);
+            var getserver = _context.ServerLists.SingleOrDefault(c => c.Id== server_id);
+            SqlConnection sql = new SqlConnection("server=" + getserver.IPAddress + ";" + "user id=" + getserver.UserId + ";" + "password=" + getserver.Password + ";");
+            ServerConnection conn = new ServerConnection(sql);
             Server server = new Server(conn);
             JobCollection jobs = server.JobServer.Jobs;
             jobs.Refresh();
@@ -77,7 +78,8 @@ namespace MSSQLScreen.Controllers.API
                         LastRunOutcome = job.LastRunOutcome.ToString(),
                         LastRun = job.LastRunDate.ToString("yyyy-MM-dd HH:mm:ss:fff"),
                         NextRun = job.NextRunDate.ToString("yyyy-MM-dd HH:mm:ss:fff"),
-                        Scheduled = job.HasSchedule
+                        Scheduled = job.HasSchedule,
+                        ServerListId = getserver.Id,
                     };
                     _context.JobLists.Add(joblist);
                     _context.SaveChanges();
@@ -101,11 +103,11 @@ namespace MSSQLScreen.Controllers.API
 
         [APIAuthorize]
         [HttpGet]
-        [Route("api/job/jobhistory/{id}")]
-        public IEnumerable<JobRunHistory> GetJobHistory(int id)
+        [Route("api/job/{server_id}/{job_id}")]
+        public IEnumerable<JobRunHistory> GetJobHistory(int server_id, int job_id)
         {
             //Delete job history in MSSQLScreen table
-            var jobhistoryInDb = _context.JobRunHistories.Where(c => c.JobListId == id).ToList();
+            var jobhistoryInDb = _context.JobRunHistories.Where(c => c.JobListId == job_id).ToList();
             foreach (var jobhis in jobhistoryInDb)
             {
                 _context.JobRunHistories.Remove(jobhis);
@@ -114,9 +116,11 @@ namespace MSSQLScreen.Controllers.API
 
 
             //Insert job history from dbo.syshistory to MSSQLScreen table
-            var joblistInDb = _context.JobLists.SingleOrDefault(c => c.Id == id);
+            var joblistInDb = _context.JobLists.SingleOrDefault(c => c.Id == job_id);
 
-            ServerConnection conn = new ServerConnection(SqlServer);
+            var getserver = _context.ServerLists.SingleOrDefault(c => c.Id == server_id);
+            SqlConnection sql = new SqlConnection("server=" + getserver.IPAddress + ";" + "user id=" + getserver.UserId + ";" + "password=" + getserver.Password + ";");
+            ServerConnection conn = new ServerConnection(sql);
             Server server = new Server(conn);
             var job = server.JobServer.Jobs[joblistInDb.Name];
             job.Refresh();
@@ -140,7 +144,7 @@ namespace MSSQLScreen.Controllers.API
                 _context.SaveChanges();
 
             }
-            return _context.JobRunHistories.Where(c => c.JobListId == id).Include(c => c.JobList).ToList();
+            return _context.JobRunHistories.Where(c => c.JobListId == job_id).Include(c => c.JobList).ToList();
         }
 
     }

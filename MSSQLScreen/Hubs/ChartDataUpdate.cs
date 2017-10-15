@@ -5,6 +5,8 @@ using MSSQLScreen.Models;
 using System.Diagnostics;
 using System.Linq;
 using Newtonsoft.Json;
+using System.Data.SqlClient;
+using System.Data;
 
 namespace MSSQLScreen.Hubs
 {
@@ -117,14 +119,25 @@ namespace MSSQLScreen.Hubs
     public class GetMemoryFromDb
     {
         [JsonProperty("availableMemory")]
-        private static float availableMemory;
+        private static int availableMemory;
 
         public void GetMemory()
         {
 
-            PerformanceCounter MemoryCounter = new PerformanceCounter("Memory", "Available MBytes");
+            SqlConnection sql = new SqlConnection("server=192.168.0.15;user id=sa;password=sukaati;");
 
-            availableMemory = MemoryCounter.NextValue();
+            using (SqlCommand cmd = new SqlCommand("SELECT physical_memory_in_use_kb FROM sys.dm_os_process_memory", sql))
+            {
+                sql.Open();
+
+                SqlDataReader reader = cmd.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    availableMemory = Convert.ToInt32(reader[0]) / 1024;
+                }
+            }
+            sql.Close();
         }
 
     }
@@ -132,18 +145,29 @@ namespace MSSQLScreen.Hubs
     public class GetCPUFromDb
     {
         [JsonProperty("cpuUsage")]
-        private static float cpuUsage;
+        private static int cpuUsage;
 
         public void GetCPU()
         {
 
-            PerformanceCounter CPUcounter = new PerformanceCounter("Processor", "% Processor Time", "_Total");
+            SqlConnection sql = new SqlConnection("server=192.168.0.15;user id=sa;password=sukaati;");
 
-            CPUcounter.NextValue();
-            Thread.Sleep(1000);
-            CPUcounter.NextValue();
-            Thread.Sleep(1000);
-            cpuUsage = CPUcounter.NextValue();
+            using (SqlCommand cmd = new SqlCommand("sp_monitor", sql))
+            {
+                cmd.CommandType = CommandType.StoredProcedure;
+                sql.Open();
+
+                SqlDataReader reader = cmd.ExecuteReader();
+
+                reader.NextResult();
+                while (reader.Read())
+                {
+                    int length = reader[0].ToString().IndexOf("(");
+                    cpuUsage = Convert.ToInt32(reader[0].ToString().Substring(0, length));
+                }
+            }
+            sql.Close();
+            
         }
     }
 

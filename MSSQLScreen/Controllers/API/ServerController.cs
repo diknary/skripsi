@@ -37,11 +37,10 @@ namespace MSSQLScreen.Controllers.API
 
         [APIAuthorize]
         [HttpGet]
-        [Route("api/server/{admin_id}")]
-        public IEnumerable<ServerList> ServerList(string admin_id)
+        [Route("api/server")]
+        public IEnumerable<ServerList> ServerList()
         {
-            int adminId = Int32.Parse(admin_id);
-            var serverlist = _context.ServerLists.Where(c => c.AdminAccountId == adminId).ToList();
+            var serverlist = _context.ServerLists.ToList();
             return serverlist;
         }
 
@@ -54,9 +53,6 @@ namespace MSSQLScreen.Controllers.API
             {
                 if (ValidateConnection(server.IPAddress, server.UserId, server.Password))
                 {
-                    var identity = (ClaimsIdentity)User.Identity;
-                    int adminId = Int32.Parse(((ClaimsIdentity)User.Identity).Claims.FirstOrDefault(c => c.Type == "AdminId").Value);
-                    var getadmin = _context.AdminAccounts.SingleOrDefault(c => c.Id == adminId);
                     var getserver = _context.ServerLists.SingleOrDefault(c => c.IPAddress == server.IPAddress);
                     if (getserver != null)
                     {
@@ -71,8 +67,7 @@ namespace MSSQLScreen.Controllers.API
                         {
                             IPAddress = server.IPAddress,
                             UserId = server.UserId,
-                            Password = server.Password,
-                            AdminAccountId = getadmin.Id
+                            Password = server.Password
                         };
 
                         _context.ServerLists.Add(addserver);
@@ -95,10 +90,10 @@ namespace MSSQLScreen.Controllers.API
 
         [APIAuthorize]
         [HttpDelete]
-        [Route("api/server/remove/{server_id}/{admin_id}")]
-        public void Remove(int server_id, int admin_id)
+        [Route("api/server/remove/{server_id}")]
+        public void Remove(int server_id)
         {
-            var getserver = _context.ServerLists.Single(c => c.Id == server_id && c.AdminAccountId == admin_id);
+            var getserver = _context.ServerLists.Single(c => c.Id == server_id);
             _context.ServerLists.Remove(getserver);
             _context.SaveChanges();
         }

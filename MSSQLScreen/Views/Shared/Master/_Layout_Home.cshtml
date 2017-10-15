@@ -15,10 +15,16 @@
     <div class="wrapper">
 
         @Html.Partial("~/Views/Shared/Partial/_Header.cshtml")
+        @if (User.IsInRole("SUPERADMIN"))
+        {
+            @Html.Partial("~/Views/Shared/Partial/_Sidebar-Superadmin.cshtml")
+        }
 
-        @Html.Partial("~/Views/Shared/Partial/_Sidebar-Superadmin.cshtml")
-
-        @{Html.RenderPartial("~/Views/Shared/Partial/_Modal-Addadmin.cshtml", new ViewDataDictionary() );}
+        else
+        {
+            @Html.Partial("~/Views/Shared/Partial/_Sidebar-Admin.cshtml")
+        }
+        @{Html.RenderPartial("~/Views/Shared/Partial/_Modal-Addadmin.cshtml", new ViewDataDictionary());}
         @{Html.RenderPartial("~/Views/Shared/Partial/_Modal-AddServer.cshtml", new ViewDataDictionary());}
              
         <!-- Content Wrapper. Contains page content -->
@@ -58,6 +64,10 @@
     @Scripts.Render("~/bundles/bootstrap")
     @Scripts.Render("~/bundles/job")
     @Scripts.Render("~/bundles/adminLTE")
+    @Scripts.Render("~/bundles/resource")
+    <script src="http://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+    <script src="/signalr/hubs"></script>
     @RenderSection("scripts", required: false)
     @if (TempData["errmsg"] != null)
     {

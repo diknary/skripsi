@@ -46,23 +46,19 @@ namespace MSSQLScreen.Controllers
         [WebAuthorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Connect(AddServerViewModel server)
+        public ActionResult AddServer(AddServerViewModel server)
         {
             if (ModelState.IsValid)
             {
                 if (ValidateConnection(server.IPAddress, server.UserId, server.Password))
                 {
-                    var identity = (ClaimsIdentity)User.Identity;
-                    int adminId = Int32.Parse(((ClaimsIdentity)User.Identity).Claims.FirstOrDefault(c => c.Type == "AdminId").Value);
-                    var getadmin = _context.AdminAccounts.SingleOrDefault(c => c.Id == adminId);
                     var getserver = _context.ServerLists.SingleOrDefault(c => c.IPAddress == server.IPAddress);
                     if (getserver != null)
                     {
                         getserver.UserId = server.UserId;
                         getserver.Password = server.Password;
                         _context.SaveChanges();
-                        Session["IPAddress"] = server.IPAddress;
-                        return RedirectToAction("MigrateJob", "Job");
+                        return RedirectToAction("MigrateJob", "Job", new { IP = server.IPAddress });
                     }
                     else
                     {
@@ -70,14 +66,12 @@ namespace MSSQLScreen.Controllers
                         {
                             IPAddress = server.IPAddress,
                             UserId = server.UserId,
-                            Password = server.Password,
-                            AdminAccountId = getadmin.Id
+                            Password = server.Password
                         };
 
                         _context.ServerLists.Add(addserver);
                         _context.SaveChanges();
-                        Session["IPAddress"] = server.IPAddress;
-                        return RedirectToAction("MigrateJob", "Job");
+                        return RedirectToAction("MigrateJob", "Job", new { IP = server.IPAddress});
                     }  
                     
                 }
@@ -97,10 +91,26 @@ namespace MSSQLScreen.Controllers
         }
 
         [WebAuthorize]
-        [Route("server/remove/{server_id}/{admin_id}")]
-        public ActionResult Remove(int server_id, int admin_id)
+        public ActionResult Connect(int server_id)
         {
-            var getserver = _context.ServerLists.Single(c => c.Id == server_id && c.AdminAccountId == admin_id);
+            var getserver = _context.ServerLists.SingleOrDefault(c => c.Id == server_id);
+            if (ValidateConnection(getserver.IPAddress, getserver.UserId, getserver.Password))
+            {
+                return RedirectToAction("MigrateJob", "Job", new { IP = getserver.IPAddress });
+
+            }
+            else
+            {
+                TempData["errmsg"] = "Login failed/User credentials may have been changed";
+                return RedirectToAction("Index", "Home");
+            }
+        }
+
+        [WebAuthorize]
+        [Route("server/remove/{server_id}")]
+        public ActionResult Remove(int server_id)
+        {
+            var getserver = _context.ServerLists.Single(c => c.Id == server_id);
             _context.ServerLists.Remove(getserver);
             _context.SaveChanges();
             return RedirectToAction("Index", "Home");

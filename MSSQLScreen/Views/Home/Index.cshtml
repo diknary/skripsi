@@ -4,9 +4,7 @@
     Layout = "~/Views/Shared/Master/_Layout_Home.cshtml";
 }
 
-@using (Html.BeginForm("Connect", "Server"))
-{
-    @Html.AntiForgeryToken()
+
     <div class="box box-primary">
         <div class="box-header">
             <h3 class="box-title">Server List</h3>
@@ -28,13 +26,10 @@
                             {
                                 <tr>
                                     <td>@server.IPAddress</td>
-                                    <td><button type="submit" class="btn btn-sm btn-primary">Connect</button></td>
-                                    <td>@Html.ActionLink("Remove", "Remove", new { controller = "Server", server_id = server.Id, admin_id = server.AdminAccountId }, new { @class = "btn btn-sm btn-primary" })</td>
-                                    @Html.HiddenFor(c => server.IPAddress)
-                                    @Html.HiddenFor(c => server.UserId)
-                                    @Html.HiddenFor(c => server.Password)
+                                    <td>@Html.ActionLink("Connect", "Connect", new { controller = "Server", server_id = server.Id }, new { @class = "btn btn-sm btn-primary" })</td>
+                                    <td>@Html.ActionLink("Remove", "Remove", new { controller = "Server", server_id = server.Id }, new { @class = "btn btn-sm btn-primary" })</td>
                                 </tr>
-                                }
+                             }
                         </tbody>
                     
                     </table>
@@ -42,5 +37,3 @@
             </div>
         </div>
     </div>
-
-}
