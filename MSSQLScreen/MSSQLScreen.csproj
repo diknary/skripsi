@@ -356,6 +356,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="GlobalVariable.cs" />
     <Compile Include="Hubs\ChartDataUpdate.cs" />
     <Compile Include="Hubs\ChartHub.cs" />
     <Compile Include="Migrations\201709090430402_FirstMigration.cs" />
@@ -405,6 +406,14 @@
     <Compile Include="Migrations\201710130932538_RemoveAdminId.cs" />
     <Compile Include="Migrations\201710130932538_RemoveAdminId.Designer.cs">
       <DependentUpon>201710130932538_RemoveAdminId.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201710161519307_ServerIdinResource.cs" />
+    <Compile Include="Migrations\201710161519307_ServerIdinResource.Designer.cs">
+      <DependentUpon>201710161519307_ServerIdinResource.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201710171705056_ChangeDayaType.cs" />
+    <Compile Include="Migrations\201710171705056_ChangeDayaType.Designer.cs">
+      <DependentUpon>201710171705056_ChangeDayaType.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -2658,6 +2667,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201710130932538_RemoveAdminId.resx">
       <DependentUpon>201710130932538_RemoveAdminId.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201710161519307_ServerIdinResource.resx">
+      <DependentUpon>201710161519307_ServerIdinResource.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201710171705056_ChangeDayaType.resx">
+      <DependentUpon>201710171705056_ChangeDayaType.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

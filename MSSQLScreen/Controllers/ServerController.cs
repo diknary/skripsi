@@ -58,7 +58,7 @@ namespace MSSQLScreen.Controllers
                         getserver.UserId = server.UserId;
                         getserver.Password = server.Password;
                         _context.SaveChanges();
-                        return RedirectToAction("MigrateJob", "Job", new { IP = server.IPAddress });
+                        return RedirectToAction("MigrateJob", "Job", new { ip_address = server.IPAddress });
                     }
                     else
                     {
@@ -71,7 +71,7 @@ namespace MSSQLScreen.Controllers
 
                         _context.ServerLists.Add(addserver);
                         _context.SaveChanges();
-                        return RedirectToAction("MigrateJob", "Job", new { IP = server.IPAddress});
+                        return RedirectToAction("MigrateJob", "Job", new { ip_address = server.IPAddress});
                     }  
                     
                 }
@@ -96,7 +96,7 @@ namespace MSSQLScreen.Controllers
             var getserver = _context.ServerLists.SingleOrDefault(c => c.Id == server_id);
             if (ValidateConnection(getserver.IPAddress, getserver.UserId, getserver.Password))
             {
-                return RedirectToAction("MigrateJob", "Job", new { IP = getserver.IPAddress });
+                return RedirectToAction("MigrateJob", "Job", new { ip_address = getserver.IPAddress });
 
             }
             else

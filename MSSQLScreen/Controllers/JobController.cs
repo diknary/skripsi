@@ -50,12 +50,11 @@ namespace MSSQLScreen.Controllers
         }
 
         [WebAuthorize]
-        //[Route("job/migratejob/{ip_address}")]
-        public ActionResult MigrateJob(string IP)
+        public ActionResult MigrateJob(string ip_address)
         {
             var identity = (ClaimsIdentity)User.Identity;
             int adminId = Int32.Parse(((ClaimsIdentity)User.Identity).Claims.FirstOrDefault(c => c.Type == "AdminId").Value);
-            var getserver = _context.ServerLists.SingleOrDefault(c => c.IPAddress == IP);
+            var getserver = _context.ServerLists.SingleOrDefault(c => c.IPAddress == ip_address);
             SqlConnection sql = new SqlConnection("server=" + getserver.IPAddress + ";" + "user id=" + getserver.UserId + ";" + "password=" + getserver.Password + ";");
             ServerConnection conn = new ServerConnection(sql);
             Server server = new Server(conn);
@@ -98,11 +97,11 @@ namespace MSSQLScreen.Controllers
 
             }
 
-            return RedirectToAction("GetJob", "Job", new { server_id = getserver.Id });
+            return RedirectToAction("GetJob", "Job", new { ip_address = getserver.IPAddress , server_id = getserver.Id });
         }
 
         [WebAuthorize]
-        //[Route("job/getjob/{server_id}")]
+        [Route("{ip_address}/job/{server_id}")]
         public ActionResult GetJob(int server_id)
         {
             var JobLists = _context.JobLists.Where(c => c.ServerListId == server_id).ToList();
@@ -110,7 +109,7 @@ namespace MSSQLScreen.Controllers
         }
 
         [WebAuthorize]
-        //[Route("job/jobhistory/{server_id}/{job_id}")]
+        //[Route("{ip_address}/job/{server_id}/{job_id}")]
         public ActionResult JobHistory(int server_id, int job_id)
         {
 

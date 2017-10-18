@@ -28,9 +28,9 @@ namespace MSSQLScreen.Hubs
 
         public void InitGetData()
         {
-            GetMemoryFromDb getMemory = new GetMemoryFromDb();
+            GetMemoryFromSys getMemory = new GetMemoryFromSys();
             getMemory.GetMemory();
-            GetCPUFromDb getCPU = new GetCPUFromDb();
+            GetCPUFromSP getCPU = new GetCPUFromSP();
             getCPU.GetCPU();
 
             Clients.All.getData(getMemory, getCPU);

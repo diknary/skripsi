@@ -16,6 +16,7 @@ namespace MSSQLScreen.Controllers
         [WebAuthorize]
         public ActionResult CPUMemoryUsage()
         {
+            GlobalVariable.URI = Request.Url.AbsoluteUri;
             return View();
         }
     }

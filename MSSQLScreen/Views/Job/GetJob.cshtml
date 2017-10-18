@@ -1,5 +1,6 @@
 ﻿@model IEnumerable<MSSQLScreen.Models.JobList>
 @{
+    var ip = Request.Params["ip_address"];
     ViewBag.Title = "Job List | MSSQLScreen";
     Layout = "~/Views/Shared/Master/_Layout_Home.cshtml";
 }
@@ -9,7 +10,7 @@
     <div class="box-header with-border">
         <h3 class="box-title">Job List</h3>
         <div class="box-tools pull-right">
-            @Html.ActionLink("CPU & Memory Usage", "CPUMemoryUsage", new { controller = "Resource" }, new { @class = "btn btn-primary btn-flat" })
+            @Html.ActionLink("CPU & Memory Usage", "CPUMemoryUsage", new { controller = "Resource", ip_address = ip}, new { @class = "btn btn-primary btn-flat" })
         </div>
     </div>
     <!-- /.box-header -->
@@ -32,7 +33,7 @@
                         @foreach (var jobactivity in Model)
                         {
                             <tr>
-                                <td>@Html.ActionLink(jobactivity.Name, "JobHistory", "Job", new { server_id = jobactivity.ServerListId, job_id = jobactivity.Id }, null)</td>
+                                <td>@Html.ActionLink(jobactivity.Name, "JobHistory", new { controller = "Job", ip_address = ip , server_id = jobactivity.ServerListId, job_id = jobactivity.Id })</td>
                                 <td>@jobactivity.JobStatus</td>
                                 <td>@jobactivity.IsEnabled</td>
                                 <td>@jobactivity.LastRunOutcome</td>

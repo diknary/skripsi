@@ -4,7 +4,6 @@ $(function () {
     //Create the Hub    
     var chartHub = $.connection.chartHub;
 
-
     //Call InitChartData     
     $.connection.hub.start().done(function () {
         chartHub.server.initSaveData();

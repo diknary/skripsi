@@ -1,4 +1,3 @@
-C:\Users\dikna\Documents\Visual Studio 2017\MSSQLScreen\MSSQLScreen\obj\Debug\MSSQLScreen.csprojResolveAssemblyReference.cache
 C:\Users\dikna\Documents\Visual Studio 2017\MSSQLScreen\MSSQLScreen\bin\Microsoft.SqlServer.BatchParser.dll
 C:\Users\dikna\Documents\Visual Studio 2017\MSSQLScreen\MSSQLScreen\bin\ApplicationInsights.config
 C:\Users\dikna\Documents\Visual Studio 2017\MSSQLScreen\MSSQLScreen\bin\Microsoft.SqlServer.XE.Core.dll
@@ -184,3 +183,6 @@ C:\Users\dikna\Documents\Visual Studio 2017\MSSQLScreen\MSSQLScreen\obj\Debug\MS
 C:\Users\dikna\Documents\Visual Studio 2017\MSSQLScreen\MSSQLScreen\obj\Debug\MSSQLScreen.Migrations.CascadeOnDelete.resources
 C:\Users\dikna\Documents\Visual Studio 2017\MSSQLScreen\MSSQLScreen\obj\Debug\MSSQLScreen.Migrations.CascadeOnDeleteServerList.resources
 C:\Users\dikna\Documents\Visual Studio 2017\MSSQLScreen\MSSQLScreen\obj\Debug\MSSQLScreen.Migrations.RemoveAdminId.resources
+C:\Users\dikna\Documents\Visual Studio 2017\MSSQLScreen\MSSQLScreen\obj\Debug\MSSQLScreen.csprojResolveAssemblyReference.cache
+C:\Users\dikna\Documents\Visual Studio 2017\MSSQLScreen\MSSQLScreen\obj\Debug\MSSQLScreen.Migrations.ServerIdinResource.resources
+C:\Users\dikna\Documents\Visual Studio 2017\MSSQLScreen\MSSQLScreen\obj\Debug\MSSQLScreen.Migrations.ChangeDayaType.resources

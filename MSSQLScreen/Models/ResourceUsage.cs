@@ -10,8 +10,12 @@ namespace MSSQLScreen.Models
     {
         public int Id { get; set; }
 
-        public float ProcessorUsage { get; set; }
+        public int ProcessorUsage { get; set; }
 
-        public float AvailableMemory { get; set; }
+        public int AvailableMemory { get; set; }
+
+        public ServerList ServerList { get; set; }
+
+        public int? ServerListId { get; set; }
     }
 }

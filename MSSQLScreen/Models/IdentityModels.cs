@@ -30,6 +30,10 @@ namespace MSSQLScreen.Models
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<ResourceUsage>()
+                .HasRequired(c => c.ServerList)
+                .WithMany()
+                .WillCascadeOnDelete(true);
             modelBuilder.Entity<JobList>()
                 .HasRequired(c => c.ServerList)
                 .WithMany()

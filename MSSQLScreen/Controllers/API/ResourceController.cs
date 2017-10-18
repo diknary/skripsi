@@ -15,10 +15,10 @@ namespace MSSQLScreen.Controllers.API
 
         [APIAuthorize]
         [HttpGet]
-        [Route("api/resource")]
-        public IHttpActionResult GetResources()
+        [Route("api/resource/{server_id}")]
+        public IHttpActionResult GetResources(int server_id)
         {
-            var resourcesInDb = _context.ResourceUsages.SingleOrDefault();
+            var resourcesInDb = _context.ResourceUsages.SingleOrDefault(c => c.ServerListId == server_id);
             return Ok(resourcesInDb);
         }
     }

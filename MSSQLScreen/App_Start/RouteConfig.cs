@@ -22,6 +22,7 @@ namespace MSSQLScreen
                 url: "{controller}/{action}/{id}",
                 defaults: new {controller = "User", action = "Login", id = UrlParameter.Optional}
             );
+
         }
     }
 }
