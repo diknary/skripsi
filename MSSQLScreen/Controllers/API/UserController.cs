@@ -19,7 +19,7 @@ namespace MSSQLScreen.Controllers.API
 
         [APIAuthorize]
         [HttpGet]
-        [Route("api/user/userlist")]
+        [Route("api/user/adminlist")]
         public IEnumerable<AdminAccount> UserList()
         {
             var userInDb = _context.AdminAccounts.ToList();
@@ -29,9 +29,9 @@ namespace MSSQLScreen.Controllers.API
         [APIAuthorize]
         [HttpGet]
         [Route("api/admin/loginhistory/{id}")]
-        public IEnumerable<LoginHistory> LoginHistory(int id)
+        public IEnumerable<AdminLog> LoginHistory(int id)
         {
-            return _context.LoginHistories.Where(c => c.AdminAccountId == id).ToList();
+            return _context.AdminLogs.Where(c => c.AdminAccountId == id).ToList();
         }
 
         [APIAuthorize]
@@ -61,6 +61,16 @@ namespace MSSQLScreen.Controllers.API
                 _context.SaveChanges();
             }
 
+        }
+
+        [APIAuthorize]
+        [HttpPut]
+        [Route("api/disconnect/{admin_id}")]
+        public void Disconnect(int admin_id)
+        {
+            var admin = _context.AdminAccounts.First(c => c.Id == admin_id);
+            admin.IsConnected = false;
+            _context.SaveChanges();
         }
 
     }

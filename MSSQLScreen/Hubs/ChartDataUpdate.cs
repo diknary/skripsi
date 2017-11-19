@@ -93,32 +93,7 @@ namespace MSSQLScreen.Hubs
 
         public void SetMemory()
         {
-            Uri uri = new Uri(GlobalVariable.URI);
-            string ip_address = HttpUtility.ParseQueryString(uri.Query).Get("ip_address");
-            var getserver = _context.ServerLists.Single(c => c.IPAddress == ip_address);
-            var resourceInDB = _context.ResourceUsages.SingleOrDefault(c => c.ServerListId == getserver.Id);
-
-            int getmemory = GetMemoryFromSys.memory;
-            int getcpu = GetCPUFromSP.cpu;
-
-            if (resourceInDB == null)
-            {
-
-                var usage = new ResourceUsage
-                {
-                    ProcessorUsage = getcpu,
-                    AvailableMemory = getmemory,
-                    ServerListId = getserver.Id
-                };
-                _context.ResourceUsages.Add(usage);
-                _context.SaveChanges();
-            }
-            else
-            {
-                resourceInDB.ProcessorUsage = getcpu;
-                resourceInDB.AvailableMemory = getmemory;
-                _context.SaveChanges();
-            }
+            
 
         }
     }
@@ -128,8 +103,6 @@ namespace MSSQLScreen.Hubs
     {
         [JsonProperty("availableMemory")]
         private static int availableMemory;
-
-        public static int memory { get; set; }
 
         private ApplicationDbContext _context;
 
@@ -156,7 +129,6 @@ namespace MSSQLScreen.Hubs
                     while (reader.Read())
                     {
                         availableMemory = Convert.ToInt32(reader[0]) / 1024;
-                        memory = Convert.ToInt32(reader[0]) / 1024;
                     }
                 }
             }
@@ -169,9 +141,7 @@ namespace MSSQLScreen.Hubs
     {
         [JsonProperty("cpuUsage")]
         private static int cpuUsage;
-
-        public static int cpu { get; set; }
-
+        
         private ApplicationDbContext _context;
 
         public GetCPUFromSP()
@@ -199,7 +169,6 @@ namespace MSSQLScreen.Hubs
                     {
                         int length = reader[0].ToString().IndexOf("(");
                         cpuUsage = Convert.ToInt32(reader[0].ToString().Substring(0, length));
-                        cpu = Convert.ToInt32(reader[0].ToString().Substring(0, length));
                     }
                 }
 

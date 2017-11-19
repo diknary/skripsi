@@ -20,19 +20,19 @@ namespace MSSQLScreen.Controllers
 
         private void CreateLoginHistory(int id)
         {
-            var addloginhis = new LoginHistory
+            var addloginhis = new AdminLog
             {
                 LoginDate = DateTime.Now,
                 AdminAccountId = id
             };
-            _context.LoginHistories.Add(addloginhis);
+            _context.AdminLogs.Add(addloginhis);
             _context.SaveChanges();
         }
 
         private void GetLastLogin(string username)
         {
             var getUser = _context.AdminAccounts.Single(c => c.Username == username);
-            var getLastLogin = _context.LoginHistories.Where(c => c.AdminAccountId == getUser.Id).OrderByDescending(c => c.Id).FirstOrDefault();
+            var getLastLogin = _context.AdminLogs.Where(c => c.AdminAccountId == getUser.Id).OrderByDescending(c => c.Id).FirstOrDefault();
             getUser.LastLogin = getLastLogin.LoginDate;
             _context.SaveChanges();
         }
@@ -144,7 +144,7 @@ namespace MSSQLScreen.Controllers
         [WebAuthorize]
         public ActionResult LoginHistory(int id)
         {
-            var loginhistory = _context.LoginHistories.Where(c => c.AdminAccountId == id).OrderBy(c => c.Id).ToList();
+            var loginhistory = _context.AdminLogs.Where(c => c.AdminAccountId == id).OrderBy(c => c.Id).ToList();
             return View(loginhistory);
         }
 

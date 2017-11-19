@@ -19,5 +19,7 @@ namespace MSSQLScreen.Models
         public string Privilege { get; set; }
 
         public DateTime? LastLogin { get; set; }
+
+        public bool IsConnected { get; set; }
     }
 }

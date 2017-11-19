@@ -18,14 +18,21 @@ namespace MSSQLScreen
             _context = new ApplicationDbContext();
         }
 
+        private void SetIsConnected(int id)
+        {
+            var admin = _context.AdminAccounts.First(c => c.Id == id);
+            admin.IsConnected = true;
+            _context.SaveChanges();
+        }
+
         private void CreateLoginHistory(int id)
         {
-            var addloginhis = new LoginHistory
+            var addloginhis = new AdminLog
             {
                 LoginDate = DateTime.Now,
                 AdminAccountId = id
             };
-            _context.LoginHistories.Add(addloginhis);
+            _context.AdminLogs.Add(addloginhis);
             _context.SaveChanges();
 
         }
@@ -33,7 +40,7 @@ namespace MSSQLScreen
         private void GetLastLogin(string username)
         {
             var getUser = _context.AdminAccounts.Single(c => c.Username == username);
-            var getLastLogin = _context.LoginHistories.Where(c => c.AdminAccountId == getUser.Id).OrderByDescending(c => c.Id).FirstOrDefault();
+            var getLastLogin = _context.AdminLogs.Where(c => c.AdminAccountId == getUser.Id).OrderByDescending(c => c.Id).FirstOrDefault();
             getUser.LastLogin = getLastLogin.LoginDate;
             _context.SaveChanges();
         }
@@ -82,8 +89,9 @@ namespace MSSQLScreen
                 
                 identity.AddClaim(new Claim(ClaimTypes.Name, usrInDb.Name));
                 identity.AddClaim(new Claim(ClaimTypes.NameIdentifier, usrInDb.Username));
-                identity.AddClaim(new Claim("AdminId", usrInDb.Id.ToString()));
+                identity.AddClaim(new Claim(ClaimTypes.Role, usrInDb.Privilege));
                 client.Validated(ticket);
+                SetIsConnected(usrInDb.Id);
                 CreateLoginHistory(usrInDb.Id);
                 GetLastLogin(client.UserName);
             }

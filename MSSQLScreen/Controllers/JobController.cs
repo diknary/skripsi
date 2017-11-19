@@ -40,12 +40,12 @@ namespace MSSQLScreen.Controllers
         }
 
         //Convert Runduration to string
-        private string RunDuration(int status)
+        private int RunDuration(int status)
         {
-            string hour = Convert.ToString(status / 10000) + ":";
-            string minutes = Convert.ToString(status / 100 % 100) + ":";
-            string seconds = Convert.ToString(status % 100);
-            string duration = hour + minutes + seconds;
+            int hour = (status / 10000) * 3600;
+            int minutes = (status / 100 % 100) * 60;
+            int seconds = (status % 100);
+            int duration = hour + minutes + seconds;
             return duration;
         }
 
@@ -114,8 +114,8 @@ namespace MSSQLScreen.Controllers
         {
 
             //Delete job history in MSSQLScreen table
-            var jobhistoryInDb = _context.JobRunHistories.Where(c => c.JobListId == job_id);
-            _context.JobRunHistories.RemoveRange(jobhistoryInDb);
+            var jobhistoryInDb = _context.JobDetails.Where(c => c.JobListId == job_id);
+            _context.JobDetails.RemoveRange(jobhistoryInDb);
             _context.SaveChanges();
 
             //Insert job history from dbo.syshistory to MSSQLScreen table
@@ -133,7 +133,7 @@ namespace MSSQLScreen.Controllers
 
             foreach (DataRow row in jobhistories.Rows.Cast<DataRow>())
             {
-                var jobrunhistory = new JobRunHistory
+                var jobrunhistory = new JobDetail
                 {
                     JobId = joblistInDb.JobId,
                     RunDate = row["RunDate"].ToString(),
@@ -143,12 +143,12 @@ namespace MSSQLScreen.Controllers
                     Duration = RunDuration(Convert.ToInt32(row["RunDuration"])),
                     RunOutcome = RunStatus(row["RunStatus"].ToString())
                 };
-                _context.JobRunHistories.Add(jobrunhistory);
+                _context.JobDetails.Add(jobrunhistory);
                 _context.SaveChanges();
 
             }
             //Pass data from MSSQLScreen table job history to view
-            var viewjobrunhistory = _context.JobRunHistories.Where(c => c.JobListId == job_id).Include(c => c.JobList).ToList();
+            var viewjobrunhistory = _context.JobDetails.Where(c => c.JobListId == job_id).Include(c => c.JobList).ToList();
 
             return View(viewjobrunhistory);
 

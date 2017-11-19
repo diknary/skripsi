@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace MSSQLScreen.Models
 {
-    public class JobRunHistory
+    public class JobDetail
     {
         public int Id { get; set; }
 
@@ -14,7 +14,7 @@ namespace MSSQLScreen.Models
 
         public string StepName { get; set; }
 
-        public string Duration { get; set; }
+        public int Duration { get; set; }
 
         public string RunOutcome { get; set; }
 

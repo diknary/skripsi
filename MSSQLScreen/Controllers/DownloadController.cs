@@ -26,7 +26,7 @@ namespace MSSQLScreen.Controllers
             ds.Locale = System.Threading.Thread.CurrentThread.CurrentCulture;
             dt.Locale = System.Threading.Thread.CurrentThread.CurrentCulture;
 
-            var jobhistoryInDb = _context.JobRunHistories.Where(c => c.JobListId == id);
+            var jobhistoryInDb = _context.JobDetails.Where(c => c.JobListId == id);
             var joblistInDb = _context.JobLists.Single(c => c.Id == id);
             dt.Columns.Add("Id", typeof(System.Int32));
             dt.Columns.Add("JobId", typeof(System.String));

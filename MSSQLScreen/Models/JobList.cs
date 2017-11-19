@@ -21,6 +21,8 @@ namespace MSSQLScreen.Models
         public string NextRun { get; set; }
 
         public bool Scheduled { get; set; }
+        
+        public int Duration { get; set; }
 
         public ServerList ServerList { get; set; }
 

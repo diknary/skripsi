@@ -5,7 +5,7 @@ using System.Web;
 
 namespace MSSQLScreen.Models
 {
-    public class LoginHistory
+    public class AdminLog
     {
         public int Id { get; set; }
 

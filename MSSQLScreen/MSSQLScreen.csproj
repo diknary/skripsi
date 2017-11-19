@@ -415,15 +415,40 @@
     <Compile Include="Migrations\201710171705056_ChangeDayaType.Designer.cs">
       <DependentUpon>201710171705056_ChangeDayaType.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201711171838147_DiskUsageRename.cs" />
+    <Compile Include="Migrations\201711171838147_DiskUsageRename.Designer.cs">
+      <DependentUpon>201711171838147_DiskUsageRename.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201711181015167_JobRunHistoryToJobDetail.cs" />
+    <Compile Include="Migrations\201711181015167_JobRunHistoryToJobDetail.Designer.cs">
+      <DependentUpon>201711181015167_JobRunHistoryToJobDetail.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201711181023188_LoginHistoriesToAdminLog.cs" />
+    <Compile Include="Migrations\201711181023188_LoginHistoriesToAdminLog.Designer.cs">
+      <DependentUpon>201711181023188_LoginHistoriesToAdminLog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201711181048359_AddDuration.cs" />
+    <Compile Include="Migrations\201711181048359_AddDuration.Designer.cs">
+      <DependentUpon>201711181048359_AddDuration.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201711190435183_AddIsConnected.cs" />
+    <Compile Include="Migrations\201711190435183_AddIsConnected.Designer.cs">
+      <DependentUpon>201711190435183_AddIsConnected.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201711190446422_RemoveIsConnected.cs" />
+    <Compile Include="Migrations\201711190446422_RemoveIsConnected.Designer.cs">
+      <DependentUpon>201711190446422_RemoveIsConnected.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\AddAdminViewModel.cs" />
     <Compile Include="Models\AddServerViewModel.cs" />
     <Compile Include="Models\AdminAccount.cs" />
+    <Compile Include="Models\DiskUsage.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\JobList.cs" />
-    <Compile Include="Models\JobRunHistory.cs" />
-    <Compile Include="Models\LoginHistory.cs" />
+    <Compile Include="Models\JobDetail.cs" />
+    <Compile Include="Models\AdminLog.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\ResourceUsage.cs" />
     <Compile Include="Models\ServerList.cs" />
@@ -2673,6 +2698,24 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201710171705056_ChangeDayaType.resx">
       <DependentUpon>201710171705056_ChangeDayaType.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201711171838147_DiskUsageRename.resx">
+      <DependentUpon>201711171838147_DiskUsageRename.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201711181015167_JobRunHistoryToJobDetail.resx">
+      <DependentUpon>201711181015167_JobRunHistoryToJobDetail.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201711181023188_LoginHistoriesToAdminLog.resx">
+      <DependentUpon>201711181023188_LoginHistoriesToAdminLog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201711181048359_AddDuration.resx">
+      <DependentUpon>201711181048359_AddDuration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201711190435183_AddIsConnected.resx">
+      <DependentUpon>201711190435183_AddIsConnected.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201711190446422_RemoveIsConnected.resx">
+      <DependentUpon>201711190446422_RemoveIsConnected.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

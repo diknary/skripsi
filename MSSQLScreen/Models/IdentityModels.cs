@@ -21,15 +21,20 @@ namespace MSSQLScreen.Models
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
         public DbSet<JobList> JobLists { get; set; }
-        public DbSet<JobRunHistory> JobRunHistories { get; set; }
+        public DbSet<JobDetail> JobDetails { get; set; }
         public DbSet<ResourceUsage> ResourceUsages { get; set; }
         public DbSet<UserAccount> UserAccounts { get; set; }
         public DbSet<AdminAccount> AdminAccounts { get; set; }
-        public DbSet<LoginHistory> LoginHistories { get; set; }
+        public DbSet<AdminLog> AdminLogs { get; set; }
         public DbSet<ServerList> ServerLists { get; set; }
+        public DbSet<DiskUsage> DiskUsages { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<DiskUsage>()
+                .HasRequired(c => c.ServerList)
+                .WithMany()
+                .WillCascadeOnDelete(true);
             modelBuilder.Entity<ResourceUsage>()
                 .HasRequired(c => c.ServerList)
                 .WithMany()
@@ -38,7 +43,7 @@ namespace MSSQLScreen.Models
                 .HasRequired(c => c.ServerList)
                 .WithMany()
                 .WillCascadeOnDelete(true);
-            modelBuilder.Entity<JobRunHistory>()
+            modelBuilder.Entity<JobDetail>()
                 .HasRequired(c => c.JobList)
                 .WithMany()
                 .WillCascadeOnDelete(true);
