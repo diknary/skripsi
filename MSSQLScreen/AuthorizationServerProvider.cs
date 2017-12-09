@@ -18,13 +18,6 @@ namespace MSSQLScreen
             _context = new ApplicationDbContext();
         }
 
-        private void SetIsConnected(int id)
-        {
-            var admin = _context.AdminAccounts.First(c => c.Id == id);
-            admin.IsConnected = true;
-            _context.SaveChanges();
-        }
-
         private void CreateLoginHistory(int id)
         {
             var addloginhis = new AdminLog
@@ -37,11 +30,12 @@ namespace MSSQLScreen
 
         }
 
-        private void GetLastLogin(string username)
+        private void GetLastLogin(string username, byte status)
         {
             var getUser = _context.AdminAccounts.Single(c => c.Username == username);
             var getLastLogin = _context.AdminLogs.Where(c => c.AdminAccountId == getUser.Id).OrderByDescending(c => c.Id).FirstOrDefault();
             getUser.LastLogin = getLastLogin.LoginDate;
+            getUser.IsOnline = status;
             _context.SaveChanges();
         }
 
@@ -86,14 +80,11 @@ namespace MSSQLScreen
 
                 });
                 var ticket = new AuthenticationTicket(identity, props);
-                
-                identity.AddClaim(new Claim(ClaimTypes.Name, usrInDb.Name));
-                identity.AddClaim(new Claim(ClaimTypes.NameIdentifier, usrInDb.Username));
-                identity.AddClaim(new Claim(ClaimTypes.Role, usrInDb.Privilege));
-                client.Validated(ticket);
-                SetIsConnected(usrInDb.Id);
+
                 CreateLoginHistory(usrInDb.Id);
-                GetLastLogin(client.UserName);
+                GetLastLogin(client.UserName, 1);
+
+                client.Validated(ticket);
             }
         }
     }

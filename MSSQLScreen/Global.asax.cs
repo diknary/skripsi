@@ -29,12 +29,5 @@ namespace MSSQLScreen
             AntiForgeryConfig.UniqueClaimTypeIdentifier = ClaimTypes.NameIdentifier;
         }
 
-        protected void Session_End()
-        {
-            var identity = (ClaimsIdentity)User.Identity;
-            string username = Convert.ToString(identity.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier));
-
-        }
-
     }
 }

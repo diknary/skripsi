@@ -16,8 +16,6 @@ namespace MSSQLScreen.Controllers.API
     {
         private ApplicationDbContext _context;
 
-        private int duration = 0;
-
         public JobController()
         {
             _context = new ApplicationDbContext();
@@ -68,17 +66,6 @@ namespace MSSQLScreen.Controllers.API
             {
 
                 var joblistInDb = _context.JobLists.SingleOrDefault(c => c.JobId == job.JobID.ToString());
-                var jobhistory = server.JobServer.Jobs[job.Name];
-                jobhistory.Refresh();
-
-                var jobfilter = new JobHistoryFilter();
-                var jobhistories = jobhistory.EnumHistory(jobfilter);
-
-                foreach (DataRow row in jobhistories.Rows.Cast<DataRow>())
-                {
-                    duration = RunDuration(Convert.ToInt32(row["RunDuration"]));
-                    break;
-                }
 
                 if (joblistInDb == null)
                 {
@@ -92,8 +79,7 @@ namespace MSSQLScreen.Controllers.API
                         LastRun = job.LastRunDate.ToString("yyyy-MM-dd HH:mm:ss:fff"),
                         NextRun = job.NextRunDate.ToString("yyyy-MM-dd HH:mm:ss:fff"),
                         Scheduled = job.HasSchedule,
-                        Duration = duration,
-                        ServerListId = getserver.Id,
+                        ServerListId = getserver.Id
                     };
                     _context.JobLists.Add(joblist);
                     _context.SaveChanges();
@@ -106,13 +92,29 @@ namespace MSSQLScreen.Controllers.API
                     joblistInDb.LastRun = job.LastRunDate.ToString("yyyy-MM-dd HH:mm:ss:fff");
                     joblistInDb.NextRun = job.NextRunDate.ToString("yyyy-MM-dd HH:mm:ss:fff");
                     joblistInDb.Scheduled = job.HasSchedule;
-                    joblistInDb.Duration = duration;
                     _context.SaveChanges();
 
                 }
 
             }
 
+            var joblists = _context.JobLists.ToList();
+            foreach (var joblist in joblists)
+            {
+                var jobhistory = server.JobServer.Jobs[joblist.Name];
+                jobhistory.Refresh();
+
+                var jobfilter = new JobHistoryFilter();
+                var jobhistories = jobhistory.EnumHistory(jobfilter);
+
+                foreach (DataRow row in jobhistories.Rows.Cast<DataRow>())
+                {
+                    joblist.Duration = RunDuration(Convert.ToInt32(row["RunDuration"]));
+                    _context.SaveChanges();
+                    break;
+                }
+            }
+            
             return _context.JobLists.OrderByDescending(c => c.Duration).ToList();
         }
 

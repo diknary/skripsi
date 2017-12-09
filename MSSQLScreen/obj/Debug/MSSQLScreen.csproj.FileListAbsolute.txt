@@ -1,5 +1,5 @@
-C:\Users\dikna\Documents\Visual Studio 2017\MSSQLScreen\MSSQLScreen\bin\Microsoft.SqlServer.BatchParser.dll
 C:\Users\dikna\Documents\Visual Studio 2017\MSSQLScreen\MSSQLScreen\bin\ApplicationInsights.config
+C:\Users\dikna\Documents\Visual Studio 2017\MSSQLScreen\MSSQLScreen\bin\Microsoft.SqlServer.BatchParser.dll
 C:\Users\dikna\Documents\Visual Studio 2017\MSSQLScreen\MSSQLScreen\bin\Microsoft.SqlServer.XE.Core.dll
 C:\Users\dikna\Documents\Visual Studio 2017\MSSQLScreen\MSSQLScreen\bin\Microsoft.SqlServer.XEvent.Linq.dll
 C:\Users\dikna\Documents\Visual Studio 2017\MSSQLScreen\MSSQLScreen\bin\roslyn\csc.exe
@@ -34,6 +34,7 @@ C:\Users\dikna\Documents\Visual Studio 2017\MSSQLScreen\MSSQLScreen\bin\MSSQLScr
 C:\Users\dikna\Documents\Visual Studio 2017\MSSQLScreen\MSSQLScreen\bin\Antlr3.Runtime.dll
 C:\Users\dikna\Documents\Visual Studio 2017\MSSQLScreen\MSSQLScreen\bin\EntityFramework.dll
 C:\Users\dikna\Documents\Visual Studio 2017\MSSQLScreen\MSSQLScreen\bin\EntityFramework.SqlServer.dll
+C:\Users\dikna\Documents\Visual Studio 2017\MSSQLScreen\MSSQLScreen\bin\ExcelLibrary.dll
 C:\Users\dikna\Documents\Visual Studio 2017\MSSQLScreen\MSSQLScreen\bin\Highcharts.Web.Mvc.dll
 C:\Users\dikna\Documents\Visual Studio 2017\MSSQLScreen\MSSQLScreen\bin\Microsoft.AI.Agent.Intercept.dll
 C:\Users\dikna\Documents\Visual Studio 2017\MSSQLScreen\MSSQLScreen\bin\Microsoft.AI.DependencyCollector.dll
@@ -48,6 +49,7 @@ C:\Users\dikna\Documents\Visual Studio 2017\MSSQLScreen\MSSQLScreen\bin\Microsof
 C:\Users\dikna\Documents\Visual Studio 2017\MSSQLScreen\MSSQLScreen\bin\Microsoft.AspNet.SignalR.Core.dll
 C:\Users\dikna\Documents\Visual Studio 2017\MSSQLScreen\MSSQLScreen\bin\Microsoft.AspNet.SignalR.SystemWeb.dll
 C:\Users\dikna\Documents\Visual Studio 2017\MSSQLScreen\MSSQLScreen\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
+C:\Users\dikna\Documents\Visual Studio 2017\MSSQLScreen\MSSQLScreen\bin\Microsoft.Owin.Cors.dll
 C:\Users\dikna\Documents\Visual Studio 2017\MSSQLScreen\MSSQLScreen\bin\Microsoft.Owin.dll
 C:\Users\dikna\Documents\Visual Studio 2017\MSSQLScreen\MSSQLScreen\bin\Microsoft.Owin.Host.SystemWeb.dll
 C:\Users\dikna\Documents\Visual Studio 2017\MSSQLScreen\MSSQLScreen\bin\Microsoft.Owin.Security.Cookies.dll
@@ -92,6 +94,7 @@ C:\Users\dikna\Documents\Visual Studio 2017\MSSQLScreen\MSSQLScreen\bin\Microsof
 C:\Users\dikna\Documents\Visual Studio 2017\MSSQLScreen\MSSQLScreen\bin\Newtonsoft.Json.dll
 C:\Users\dikna\Documents\Visual Studio 2017\MSSQLScreen\MSSQLScreen\bin\Owin.dll
 C:\Users\dikna\Documents\Visual Studio 2017\MSSQLScreen\MSSQLScreen\bin\System.Net.Http.Formatting.dll
+C:\Users\dikna\Documents\Visual Studio 2017\MSSQLScreen\MSSQLScreen\bin\System.Web.Cors.dll
 C:\Users\dikna\Documents\Visual Studio 2017\MSSQLScreen\MSSQLScreen\bin\System.Web.Helpers.dll
 C:\Users\dikna\Documents\Visual Studio 2017\MSSQLScreen\MSSQLScreen\bin\System.Web.Http.dll
 C:\Users\dikna\Documents\Visual Studio 2017\MSSQLScreen\MSSQLScreen\bin\System.Web.Http.WebHost.dll
@@ -107,6 +110,8 @@ C:\Users\dikna\Documents\Visual Studio 2017\MSSQLScreen\MSSQLScreen\bin\Highchar
 C:\Users\dikna\Documents\Visual Studio 2017\MSSQLScreen\MSSQLScreen\bin\Microsoft.AspNet.SignalR.Core.xml
 C:\Users\dikna\Documents\Visual Studio 2017\MSSQLScreen\MSSQLScreen\bin\Microsoft.AspNet.SignalR.SystemWeb.xml
 C:\Users\dikna\Documents\Visual Studio 2017\MSSQLScreen\MSSQLScreen\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
+C:\Users\dikna\Documents\Visual Studio 2017\MSSQLScreen\MSSQLScreen\bin\Microsoft.Owin.xml
+C:\Users\dikna\Documents\Visual Studio 2017\MSSQLScreen\MSSQLScreen\bin\Microsoft.Owin.Cors.xml
 C:\Users\dikna\Documents\Visual Studio 2017\MSSQLScreen\MSSQLScreen\bin\Microsoft.SqlServer.AzureStorageEnum.xml
 C:\Users\dikna\Documents\Visual Studio 2017\MSSQLScreen\MSSQLScreen\bin\Microsoft.SqlServer.ConnectionInfo.xml
 C:\Users\dikna\Documents\Visual Studio 2017\MSSQLScreen\MSSQLScreen\bin\Microsoft.SqlServer.ConnectionInfoExtended.xml
@@ -150,7 +155,6 @@ C:\Users\dikna\Documents\Visual Studio 2017\MSSQLScreen\MSSQLScreen\bin\EntityFr
 C:\Users\dikna\Documents\Visual Studio 2017\MSSQLScreen\MSSQLScreen\bin\Microsoft.AspNet.Identity.Core.xml
 C:\Users\dikna\Documents\Visual Studio 2017\MSSQLScreen\MSSQLScreen\bin\Microsoft.AspNet.Identity.Owin.xml
 C:\Users\dikna\Documents\Visual Studio 2017\MSSQLScreen\MSSQLScreen\bin\Microsoft.AspNet.Identity.EntityFramework.xml
-C:\Users\dikna\Documents\Visual Studio 2017\MSSQLScreen\MSSQLScreen\bin\Microsoft.Owin.xml
 C:\Users\dikna\Documents\Visual Studio 2017\MSSQLScreen\MSSQLScreen\bin\Microsoft.Owin.Host.SystemWeb.xml
 C:\Users\dikna\Documents\Visual Studio 2017\MSSQLScreen\MSSQLScreen\bin\Microsoft.Owin.Security.xml
 C:\Users\dikna\Documents\Visual Studio 2017\MSSQLScreen\MSSQLScreen\bin\Microsoft.Owin.Security.Facebook.xml
@@ -164,14 +168,7 @@ C:\Users\dikna\Documents\Visual Studio 2017\MSSQLScreen\MSSQLScreen\bin\Microsof
 C:\Users\dikna\Documents\Visual Studio 2017\MSSQLScreen\MSSQLScreen\bin\Microsoft.AI.ServerTelemetryChannel.xml
 C:\Users\dikna\Documents\Visual Studio 2017\MSSQLScreen\MSSQLScreen\bin\Microsoft.AI.WindowsServer.xml
 C:\Users\dikna\Documents\Visual Studio 2017\MSSQLScreen\MSSQLScreen\bin\Microsoft.AI.Web.xml
-C:\Users\dikna\Documents\Visual Studio 2017\MSSQLScreen\MSSQLScreen\obj\Debug\MSSQLScreen.dll
-C:\Users\dikna\Documents\Visual Studio 2017\MSSQLScreen\MSSQLScreen\obj\Debug\MSSQLScreen.pdb
-C:\Users\dikna\Documents\Visual Studio 2017\MSSQLScreen\MSSQLScreen\bin\Microsoft.Owin.Cors.dll
-C:\Users\dikna\Documents\Visual Studio 2017\MSSQLScreen\MSSQLScreen\bin\System.Web.Cors.dll
-C:\Users\dikna\Documents\Visual Studio 2017\MSSQLScreen\MSSQLScreen\bin\Microsoft.Owin.Cors.xml
-C:\Users\dikna\Documents\Visual Studio 2017\MSSQLScreen\MSSQLScreen\bin\ExcelLibrary.dll
 C:\Users\dikna\Documents\Visual Studio 2017\MSSQLScreen\MSSQLScreen\obj\Debug\MSSQLScreen.Migrations.FirstMigration.resources
-C:\Users\dikna\Documents\Visual Studio 2017\MSSQLScreen\MSSQLScreen\obj\Debug\MSSQLScreen.csproj.GenerateResource.Cache
 C:\Users\dikna\Documents\Visual Studio 2017\MSSQLScreen\MSSQLScreen\obj\Debug\MSSQLScreen.Migrations.SecondMigration.resources
 C:\Users\dikna\Documents\Visual Studio 2017\MSSQLScreen\MSSQLScreen\obj\Debug\MSSQLScreen.Migrations.AddAdminAccount.resources
 C:\Users\dikna\Documents\Visual Studio 2017\MSSQLScreen\MSSQLScreen\obj\Debug\MSSQLScreen.Migrations.LoginHistory.resources
@@ -183,7 +180,6 @@ C:\Users\dikna\Documents\Visual Studio 2017\MSSQLScreen\MSSQLScreen\obj\Debug\MS
 C:\Users\dikna\Documents\Visual Studio 2017\MSSQLScreen\MSSQLScreen\obj\Debug\MSSQLScreen.Migrations.CascadeOnDelete.resources
 C:\Users\dikna\Documents\Visual Studio 2017\MSSQLScreen\MSSQLScreen\obj\Debug\MSSQLScreen.Migrations.CascadeOnDeleteServerList.resources
 C:\Users\dikna\Documents\Visual Studio 2017\MSSQLScreen\MSSQLScreen\obj\Debug\MSSQLScreen.Migrations.RemoveAdminId.resources
-C:\Users\dikna\Documents\Visual Studio 2017\MSSQLScreen\MSSQLScreen\obj\Debug\MSSQLScreen.csprojResolveAssemblyReference.cache
 C:\Users\dikna\Documents\Visual Studio 2017\MSSQLScreen\MSSQLScreen\obj\Debug\MSSQLScreen.Migrations.ServerIdinResource.resources
 C:\Users\dikna\Documents\Visual Studio 2017\MSSQLScreen\MSSQLScreen\obj\Debug\MSSQLScreen.Migrations.ChangeDayaType.resources
 C:\Users\dikna\Documents\Visual Studio 2017\MSSQLScreen\MSSQLScreen\obj\Debug\MSSQLScreen.Migrations.DiskUsageRename.resources
@@ -191,4 +187,13 @@ C:\Users\dikna\Documents\Visual Studio 2017\MSSQLScreen\MSSQLScreen\obj\Debug\MS
 C:\Users\dikna\Documents\Visual Studio 2017\MSSQLScreen\MSSQLScreen\obj\Debug\MSSQLScreen.Migrations.LoginHistoriesToAdminLog.resources
 C:\Users\dikna\Documents\Visual Studio 2017\MSSQLScreen\MSSQLScreen\obj\Debug\MSSQLScreen.Migrations.AddDuration.resources
 C:\Users\dikna\Documents\Visual Studio 2017\MSSQLScreen\MSSQLScreen\obj\Debug\MSSQLScreen.Migrations.AddIsConnected.resources
-C:\Users\dikna\Documents\Visual Studio 2017\MSSQLScreen\MSSQLScreen\obj\Debug\MSSQLScreen.Migrations.RemoveIsConnected.resources
+C:\Users\dikna\Documents\Visual Studio 2017\MSSQLScreen\MSSQLScreen\obj\Debug\MSSQLScreen.Migrations.Removeisconnected.resources
+C:\Users\dikna\Documents\Visual Studio 2017\MSSQLScreen\MSSQLScreen\obj\Debug\MSSQLScreen.csproj.GenerateResource.Cache
+C:\Users\dikna\Documents\Visual Studio 2017\MSSQLScreen\MSSQLScreen\obj\Debug\MSSQLScreen.dll
+C:\Users\dikna\Documents\Visual Studio 2017\MSSQLScreen\MSSQLScreen\obj\Debug\MSSQLScreen.pdb
+C:\Users\dikna\Documents\Visual Studio 2017\MSSQLScreen\MSSQLScreen\obj\Debug\MSSQLScreen.Migrations.IsConnected.resources
+C:\Users\dikna\Documents\Visual Studio 2017\MSSQLScreen\MSSQLScreen\obj\Debug\MSSQLScreen.csprojResolveAssemblyReference.cache
+C:\Users\dikna\Documents\Visual Studio 2017\MSSQLScreen\MSSQLScreen\obj\Debug\MSSQLScreen.Migrations.IsOnline.resources
+C:\Users\dikna\Documents\Visual Studio 2017\MSSQLScreen\MSSQLScreen\obj\Debug\MSSQLScreen.Migrations.RemoveResourceId.resources
+C:\Users\dikna\Documents\Visual Studio 2017\MSSQLScreen\MSSQLScreen\obj\Debug\MSSQLScreen.Migrations.cpuBusy.resources
+C:\Users\dikna\Documents\Visual Studio 2017\MSSQLScreen\MSSQLScreen\obj\Debug\MSSQLScreen.Migrations.FirebaseTokenandStatusServer.resources

@@ -10,7 +10,7 @@ namespace MSSQLScreen.Models
     {
         public int Id { get; set; }
 
-        public int ProcessorUsage { get; set; }
+        public int CPUBusy { get; set; }
 
         public int AvailableMemory { get; set; }
 

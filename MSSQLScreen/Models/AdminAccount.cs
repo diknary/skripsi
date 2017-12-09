@@ -20,6 +20,8 @@ namespace MSSQLScreen.Models
 
         public DateTime? LastLogin { get; set; }
 
-        public bool IsConnected { get; set; }
+        public byte IsOnline { get; set; }
+
+        public string FirebaseToken { get; set; }
     }
 }

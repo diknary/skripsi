@@ -19,7 +19,7 @@ namespace MSSQLScreen.Controllers.API
 
         [APIAuthorize]
         [HttpGet]
-        [Route("api/user/adminlist")]
+        [Route("api/admin/adminlist")]
         public IEnumerable<AdminAccount> UserList()
         {
             var userInDb = _context.AdminAccounts.ToList();
@@ -28,14 +28,14 @@ namespace MSSQLScreen.Controllers.API
 
         [APIAuthorize]
         [HttpGet]
-        [Route("api/admin/loginhistory/{id}")]
+        [Route("api/admin/{admin_id}")]
         public IEnumerable<AdminLog> LoginHistory(int id)
         {
             return _context.AdminLogs.Where(c => c.AdminAccountId == id).ToList();
         }
 
         [APIAuthorize]
-        [HttpPut]
+        [HttpPost]
         [Route("api/admin/addadmin")]
         public void AddAdmin(AddAdminViewModel admin)
         {
@@ -68,10 +68,19 @@ namespace MSSQLScreen.Controllers.API
         [Route("api/disconnect/{admin_id}")]
         public void Disconnect(int admin_id)
         {
-            var admin = _context.AdminAccounts.First(c => c.Id == admin_id);
-            admin.IsConnected = false;
+            var admin = _context.AdminAccounts.Single(c => c.Id == admin_id);
+            admin.IsOnline = 0;
             _context.SaveChanges();
         }
 
+        [APIAuthorize]
+        [HttpPut]
+        [Route("api/admin/{admin_id}/{token}")]
+        public void Disconnect(int admin_id, string token)
+        {
+            var admin = _context.AdminAccounts.Single(c => c.Id == admin_id);
+            admin.FirebaseToken = token;
+            _context.SaveChanges();
+        }
     }
 }

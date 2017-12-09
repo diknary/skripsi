@@ -435,9 +435,29 @@
     <Compile Include="Migrations\201711190435183_AddIsConnected.Designer.cs">
       <DependentUpon>201711190435183_AddIsConnected.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201711190446422_RemoveIsConnected.cs" />
-    <Compile Include="Migrations\201711190446422_RemoveIsConnected.Designer.cs">
-      <DependentUpon>201711190446422_RemoveIsConnected.cs</DependentUpon>
+    <Compile Include="Migrations\201711200129046_Removeisconnected.cs" />
+    <Compile Include="Migrations\201711200129046_Removeisconnected.Designer.cs">
+      <DependentUpon>201711200129046_Removeisconnected.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201711200133088_IsConnected.cs" />
+    <Compile Include="Migrations\201711200133088_IsConnected.Designer.cs">
+      <DependentUpon>201711200133088_IsConnected.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201711200220042_IsOnline.cs" />
+    <Compile Include="Migrations\201711200220042_IsOnline.Designer.cs">
+      <DependentUpon>201711200220042_IsOnline.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201711200337514_RemoveResourceId.cs" />
+    <Compile Include="Migrations\201711200337514_RemoveResourceId.Designer.cs">
+      <DependentUpon>201711200337514_RemoveResourceId.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201711200343200_cpuBusy.cs" />
+    <Compile Include="Migrations\201711200343200_cpuBusy.Designer.cs">
+      <DependentUpon>201711200343200_cpuBusy.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201712071445460_FirebaseTokenandStatusServer.cs" />
+    <Compile Include="Migrations\201712071445460_FirebaseTokenandStatusServer.Designer.cs">
+      <DependentUpon>201712071445460_FirebaseTokenandStatusServer.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -451,6 +471,7 @@
     <Compile Include="Models\AdminLog.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\ResourceUsage.cs" />
+    <Compile Include="Models\ResourceViewModel.cs" />
     <Compile Include="Models\ServerList.cs" />
     <Compile Include="Models\UserAccount.cs" />
     <Compile Include="Models\UserLoginViewModel.cs" />
@@ -2714,8 +2735,23 @@
     <EmbeddedResource Include="Migrations\201711190435183_AddIsConnected.resx">
       <DependentUpon>201711190435183_AddIsConnected.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201711190446422_RemoveIsConnected.resx">
-      <DependentUpon>201711190446422_RemoveIsConnected.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201711200129046_Removeisconnected.resx">
+      <DependentUpon>201711200129046_Removeisconnected.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201711200133088_IsConnected.resx">
+      <DependentUpon>201711200133088_IsConnected.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201711200220042_IsOnline.resx">
+      <DependentUpon>201711200220042_IsOnline.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201711200337514_RemoveResourceId.resx">
+      <DependentUpon>201711200337514_RemoveResourceId.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201711200343200_cpuBusy.resx">
+      <DependentUpon>201711200343200_cpuBusy.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201712071445460_FirebaseTokenandStatusServer.resx">
+      <DependentUpon>201712071445460_FirebaseTokenandStatusServer.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

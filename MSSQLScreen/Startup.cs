@@ -20,7 +20,7 @@ namespace MSSQLScreen
             OAuthAuthorizationServerOptions options = new OAuthAuthorizationServerOptions
             {
                 AllowInsecureHttp = true,
-                TokenEndpointPath = new PathString("/token"),
+                TokenEndpointPath = new PathString("/request_token"),
                 AccessTokenExpireTimeSpan = TimeSpan.FromDays(1),
                 Provider = serverProvider
             };

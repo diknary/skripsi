@@ -20,8 +20,6 @@ namespace MSSQLScreen.Models
 
         public string RunDate { get; set; }
 
-        public string ResourceId { get; set; }
-
         public JobList JobList { get; set; }
 
         public int? JobListId { get; set; }

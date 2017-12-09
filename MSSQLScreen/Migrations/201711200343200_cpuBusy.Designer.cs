@@ -7,13 +7,13 @@ namespace MSSQLScreen.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
-    public sealed partial class RemoveIsConnected : IMigrationMetadata
+    public sealed partial class cpuBusy : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(RemoveIsConnected));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(cpuBusy));
         
         string IMigrationMetadata.Id
         {
-            get { return "201711190446422_RemoveIsConnected"; }
+            get { return "201711200343200_cpuBusy"; }
         }
         
         string IMigrationMetadata.Source
