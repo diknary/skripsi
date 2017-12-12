@@ -95,7 +95,7 @@ namespace MSSQLScreen.Controllers.API
 
         [APIAuthorize]
         [HttpPut]
-        [Route("api/login/{admin_id}")]
+        [Route("api/logout/{admin_id}")]
         public void IsNotOnline(int admin_id)
         {
             var admin = _context.AdminAccounts.SingleOrDefault(c => c.Id == admin_id);
