@@ -30,12 +30,11 @@ namespace MSSQLScreen
 
         }
 
-        private void GetLastLogin(string username, byte status)
+        private void GetLastLogin(string username)
         {
             var getUser = _context.AdminAccounts.Single(c => c.Username == username);
             var getLastLogin = _context.AdminLogs.Where(c => c.AdminAccountId == getUser.Id).OrderByDescending(c => c.Id).FirstOrDefault();
             getUser.LastLogin = getLastLogin.LoginDate;
-            getUser.IsOnline = status;
             _context.SaveChanges();
         }
 
@@ -82,7 +81,7 @@ namespace MSSQLScreen
                 var ticket = new AuthenticationTicket(identity, props);
 
                 CreateLoginHistory(usrInDb.Id);
-                GetLastLogin(client.UserName, 1);
+                GetLastLogin(client.UserName);
 
                 client.Validated(ticket);
             }

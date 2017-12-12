@@ -29,9 +29,9 @@ namespace MSSQLScreen.Controllers.API
         [APIAuthorize]
         [HttpGet]
         [Route("api/admin/{admin_id}")]
-        public IEnumerable<AdminLog> LoginHistory(int id)
+        public IEnumerable<AdminLog> LoginHistory(int admin_id)
         {
-            return _context.AdminLogs.Where(c => c.AdminAccountId == id).ToList();
+            return _context.AdminLogs.Where(c => c.AdminAccountId == admin_id).ToList();
         }
 
         [APIAuthorize]
@@ -65,22 +65,47 @@ namespace MSSQLScreen.Controllers.API
 
         [APIAuthorize]
         [HttpPut]
-        [Route("api/disconnect/{admin_id}")]
-        public void Disconnect(int admin_id)
+        [Route("api/admin/{admin_id}")]
+        public void FirebaseToken(int admin_id, FirebaseTokenViewModel frbs)
         {
-            var admin = _context.AdminAccounts.Single(c => c.Id == admin_id);
-            admin.IsOnline = 0;
-            _context.SaveChanges();
+            var admin = _context.AdminAccounts.SingleOrDefault(c => c.Id == admin_id);
+            if (admin == null)
+                throw new HttpResponseException(HttpStatusCode.NotFound);
+            else
+            {
+                admin.FirebaseToken = frbs.Token;
+                _context.SaveChanges();
+            }          
         }
 
         [APIAuthorize]
         [HttpPut]
-        [Route("api/admin/{admin_id}/{token}")]
-        public void Disconnect(int admin_id, string token)
+        [Route("api/login/{admin_id}")]
+        public void IsOnline(int admin_id)
         {
-            var admin = _context.AdminAccounts.Single(c => c.Id == admin_id);
-            admin.FirebaseToken = token;
-            _context.SaveChanges();
+            var admin = _context.AdminAccounts.SingleOrDefault(c => c.Id == admin_id);
+            if (admin == null)
+                throw new HttpResponseException(HttpStatusCode.NotFound);
+            else
+            {
+                admin.IsOnline = 1;
+                _context.SaveChanges();
+            }
+        }
+
+        [APIAuthorize]
+        [HttpPut]
+        [Route("api/login/{admin_id}")]
+        public void IsNotOnline(int admin_id)
+        {
+            var admin = _context.AdminAccounts.SingleOrDefault(c => c.Id == admin_id);
+            if (admin == null)
+                throw new HttpResponseException(HttpStatusCode.NotFound);
+            else
+            {
+                admin.IsOnline = 0;
+                _context.SaveChanges();
+            }
         }
     }
 }

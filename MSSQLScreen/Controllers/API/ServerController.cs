@@ -93,9 +93,14 @@ namespace MSSQLScreen.Controllers.API
         [Route("api/server/remove/{server_id}")]
         public void Remove(int server_id)
         {
-            var getserver = _context.ServerLists.Single(c => c.Id == server_id);
-            _context.ServerLists.Remove(getserver);
-            _context.SaveChanges();
+            var getserver = _context.ServerLists.SingleOrDefault(c => c.Id == server_id);
+            if (getserver == null)
+                throw new HttpResponseException(HttpStatusCode.NotFound);
+            else
+            {
+                _context.ServerLists.Remove(getserver);
+                _context.SaveChanges();
+            }          
         }
     }
 }

@@ -465,6 +465,7 @@
     <Compile Include="Models\AddServerViewModel.cs" />
     <Compile Include="Models\AdminAccount.cs" />
     <Compile Include="Models\DiskUsage.cs" />
+    <Compile Include="Models\FirebaseTokenViewModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\JobList.cs" />
     <Compile Include="Models\JobDetail.cs" />

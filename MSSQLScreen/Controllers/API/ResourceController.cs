@@ -83,7 +83,7 @@ namespace MSSQLScreen.Controllers.API
 
                 }
 
-                for (int i = 1; i < driveName.Length - 3; i += 2)
+                for (int i = 1; i < driveName.Length - 2; i += 2)
                 {
                     var tmp = driveName[i];
                     var driveInDb = _context.DiskUsages.SingleOrDefault(c => c.DriveName == tmp);
@@ -97,17 +97,26 @@ namespace MSSQLScreen.Controllers.API
                                 int ctr = 0;
                                 while (reader2.Read())
                                 {
-                                    int start = reader2[0].ToString().IndexOf(":") + 2;
-                                    int lastindex = reader2[0].ToString().Length;
-                                    if (ctr == 1)
+                                    try
                                     {
-                                        totalSpace = Convert.ToInt64(reader2[0].ToString().Substring(start, lastindex - start)) / 1073741824;
-                                        break;
+                                        int start = reader2[0].ToString().IndexOf(":") + 2;
+                                        int lastindex = reader2[0].ToString().Length;
+                                        if (ctr == 1)
+                                        {
+                                            totalSpace = Convert.ToInt64(reader2[0].ToString().Substring(start, lastindex - start)) / 1073741824;
+                                            break;
+                                        }
+                                        else
+                                        {
+                                            availableSpace = Convert.ToInt64(reader2[0].ToString().Substring(start, lastindex - start)) / 1073741824;
+                                            ctr++;
+                                        }
                                     }
-                                    else
+                                    catch (Exception)
                                     {
-                                        availableSpace = Convert.ToInt64(reader2[0].ToString().Substring(start, lastindex - start)) / 1073741824;
-                                        ctr++;
+                                        totalSpace = 0;
+                                        availableSpace = 0;
+                                        break;
                                     }
 
                                 }
@@ -127,17 +136,26 @@ namespace MSSQLScreen.Controllers.API
                                 int ctr = 0;
                                 while (reader2.Read())
                                 {
-                                    int start = reader2[0].ToString().IndexOf(":") + 2;
-                                    int lastindex = reader2[0].ToString().Length;
-                                    if (ctr == 1)
+                                    try
                                     {
-                                        totalSpace = Convert.ToInt64(reader2[0].ToString().Substring(start, lastindex - start)) / 1073741824;
-                                        break;
+                                        int start = reader2[0].ToString().IndexOf(":") + 2;
+                                        int lastindex = reader2[0].ToString().Length;
+                                        if (ctr == 1)
+                                        {
+                                            totalSpace = Convert.ToInt64(reader2[0].ToString().Substring(start, lastindex - start)) / 1073741824;
+                                            break;
+                                        }
+                                        else
+                                        {
+                                            availableSpace = Convert.ToInt64(reader2[0].ToString().Substring(start, lastindex - start)) / 1073741824;
+                                            ctr++;
+                                        }
                                     }
-                                    else
+                                    catch (Exception)
                                     {
-                                        availableSpace = Convert.ToInt64(reader2[0].ToString().Substring(start, lastindex - start)) / 1073741824;
-                                        ctr++;
+                                        totalSpace = 0;
+                                        availableSpace = 0;
+                                        break;
                                     }
 
                                 }
