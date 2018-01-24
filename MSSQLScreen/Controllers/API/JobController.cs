@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
 using System.Linq;
+using System.Text;
 using System.Web.Http;
 using Microsoft.SqlServer.Management.Smo;
 using Microsoft.SqlServer.Management.Common;
@@ -56,7 +57,8 @@ namespace MSSQLScreen.Controllers.API
         public IEnumerable<JobList> GetJob(int server_id)
         {
             var getserver = _context.ServerLists.SingleOrDefault(c => c.Id== server_id);
-            SqlConnection sql = new SqlConnection("server=" + getserver.IPAddress + ";" + "user id=" + getserver.UserId + ";" + "password=" + getserver.Password + ";");
+            byte[] dcrpt = Convert.FromBase64String(getserver.Password);
+            SqlConnection sql = new SqlConnection("server=" + getserver.IPAddress + ";" + "user id=" + getserver.UserId + ";" + "password=" + ASCIIEncoding.ASCII.GetString(dcrpt)  + ";");
             ServerConnection conn = new ServerConnection(sql);
             Server server = new Server(conn);
             JobCollection jobs = server.JobServer.Jobs;
@@ -136,7 +138,8 @@ namespace MSSQLScreen.Controllers.API
             var joblistInDb = _context.JobLists.SingleOrDefault(c => c.Id == job_id);
 
             var getserver = _context.ServerLists.SingleOrDefault(c => c.Id == server_id);
-            SqlConnection sql = new SqlConnection("server=" + getserver.IPAddress + ";" + "user id=" + getserver.UserId + ";" + "password=" + getserver.Password + ";");
+            byte[] dcrpt = Convert.FromBase64String(getserver.Password);
+            SqlConnection sql = new SqlConnection("server=" + getserver.IPAddress + ";" + "user id=" + getserver.UserId + ";" + "password=" + ASCIIEncoding.ASCII.GetString(dcrpt) + ";");
             ServerConnection conn = new ServerConnection(sql);
             Server server = new Server(conn);
             var job = server.JobServer.Jobs[joblistInDb.Name];

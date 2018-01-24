@@ -202,3 +202,4 @@ C:\Users\dikna\Documents\Visual Studio 2017\MSSQLScreen\MSSQLScreen\obj\Debug\MS
 C:\Users\dikna\Documents\Visual Studio 2017\MSSQLScreen\MSSQLScreen\obj\Debug\MSSQLScreen.Migrations.test1.resources
 C:\Users\dikna\Documents\Visual Studio 2017\MSSQLScreen\MSSQLScreen\obj\Debug\MSSQLScreen.csprojResolveAssemblyReference.cache
 C:\Users\dikna\Documents\Visual Studio 2017\MSSQLScreen\MSSQLScreen\obj\Debug\MSSQLScreen.Migrations.test2.resources
+C:\Users\dikna\Documents\Visual Studio 2017\MSSQLScreen\MSSQLScreen\obj\Debug\MSSQLScreen.Migrations.RemoveSalt.resources

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Net;
-using System.Security.Claims;
+using System.Text;
 using System.Security.Cryptography;
 using System.Web.Http;
 
@@ -80,7 +80,7 @@ namespace MSSQLScreen.Controllers.API
         }
 
         [APIAuthorize]
-        [HttpGet]
+        [HttpPost]
         [Route("api/server/server_id")]
         public IHttpActionResult Connect(int server_id)
         {
@@ -89,10 +89,19 @@ namespace MSSQLScreen.Controllers.API
                 throw new HttpResponseException(HttpStatusCode.NotFound);
             else
             {
-                if (ValidateConnection(getserver.IPAddress, getserver.UserId, getserver.Password))
-                    return StatusCode(HttpStatusCode.Accepted);
-                else
-                    throw new HttpResponseException(HttpStatusCode.NotAcceptable);
+                byte[] dcrpt = Convert.FromBase64String(getserver.Password);
+                try
+                {
+                    if (ValidateConnection(getserver.IPAddress, getserver.UserId, ASCIIEncoding.ASCII.GetString(dcrpt)))
+                        return StatusCode(HttpStatusCode.Accepted);
+                    else
+                        throw new HttpResponseException(HttpStatusCode.NotAcceptable);
+                }
+                catch (FormatException)
+                {
+                    throw new HttpResponseException(HttpStatusCode.InternalServerError);
+                }
+                
             }
         }
 
@@ -109,54 +118,28 @@ namespace MSSQLScreen.Controllers.API
                     var getserver = _context.ServerLists.SingleOrDefault(c => c.IPAddress == server.IPAddress);
                     if (getserver != null)
                     {
-                        TripleDESCryptoServiceProvider tdes = new TripleDESCryptoServiceProvider();
+                        byte[] ncrpt = ASCIIEncoding.ASCII.GetBytes(server.Password);
 
-                        try
-                        {
-                            PasswordDeriveBytes pdb = new PasswordDeriveBytes(server.Password, Convert.FromBase64String(getserver.Salt));
-
-                            tdes.Key = pdb.CryptDeriveKey("TripleDES", "SHA1", 192, tdes.IV);
-
-                            getserver.UserId = server.UserId;
-                            getserver.Password = Convert.ToBase64String(tdes.Key);
-                            _context.SaveChanges();
-                        }
-                        finally
-                        {
-                            tdes.Clear();
-                        }
+                        getserver.UserId = server.UserId;
+                        getserver.Password = Convert.ToBase64String(ncrpt);
+                        _context.SaveChanges();
 
                         return StatusCode(HttpStatusCode.Accepted);
                     }
                     else
                     {
-                        byte[] salt = CreateRandomSalt(10);
+                        byte[] ncrpt = ASCIIEncoding.ASCII.GetBytes(server.Password);
 
-                        TripleDESCryptoServiceProvider tdes = new TripleDESCryptoServiceProvider();
-
-                        try
+                        var addserver = new ServerList
                         {
-                            PasswordDeriveBytes pdb = new PasswordDeriveBytes(server.Password, salt);
+                            IPAddress = server.IPAddress,
+                            UserId = server.UserId,
+                            Password = Convert.ToBase64String(ncrpt),
+                        };
 
-                            tdes.Key = pdb.CryptDeriveKey("TripleDES", "SHA1", 192, tdes.IV);
+                        _context.ServerLists.Add(addserver);
+                        _context.SaveChanges();
 
-                            var addserver = new ServerList
-                            {
-                                IPAddress = server.IPAddress,
-                                UserId = server.UserId,
-                                Password = Convert.ToBase64String(tdes.Key),
-                                Salt = Convert.ToBase64String(salt)
-                            };
-
-                            _context.ServerLists.Add(addserver);
-                            _context.SaveChanges();
-                        }
-                        finally
-                        {
-                            ClearBytes(salt);
-                            tdes.Clear();
-                        }
-                        
                         return StatusCode(HttpStatusCode.Accepted);
                     }
 

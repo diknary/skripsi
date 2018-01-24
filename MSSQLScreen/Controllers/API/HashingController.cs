@@ -51,7 +51,7 @@ namespace MSSQLScreen.Controllers.API
 
         [HttpPost]
         [Route("api/newuser")]
-        public void NewUser(AddUserViewModel user)
+        public IHttpActionResult NewUser(AddUserViewModel user)
         {
             byte[] salt = CreateRandomSalt(10);
 
@@ -72,6 +72,7 @@ namespace MSSQLScreen.Controllers.API
                 };
                 _context.UserAccounts.Add(newUser);
                 _context.SaveChanges();
+                return Ok();
             }
             finally
             {
