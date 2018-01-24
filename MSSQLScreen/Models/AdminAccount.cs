@@ -7,14 +7,9 @@ namespace MSSQLScreen.Models
     {
         public int Id { get; set; }
 
-        public string Name { get; set; }
+        public UserAccount UserAccount { get; set; }
 
-        public string NIP { get; set; }
-
-        public string Username { get; set; }
-
-        [DataType(DataType.Password)]
-        public string Password { get; set; }
+        public int? UserAccountId { get; set; }
 
         public string Privilege { get; set; }
 

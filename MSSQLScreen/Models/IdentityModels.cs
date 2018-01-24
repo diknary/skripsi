@@ -21,7 +21,7 @@ namespace MSSQLScreen.Models
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
         public DbSet<JobList> JobLists { get; set; }
-        public DbSet<JobDetail> JobDetails { get; set; }
+        public DbSet<JobHistory> JobDetails { get; set; }
         public DbSet<ResourceUsage> ResourceUsages { get; set; }
         public DbSet<UserAccount> UserAccounts { get; set; }
         public DbSet<AdminAccount> AdminAccounts { get; set; }
@@ -43,8 +43,12 @@ namespace MSSQLScreen.Models
                 .HasRequired(c => c.ServerList)
                 .WithMany()
                 .WillCascadeOnDelete(true);
-            modelBuilder.Entity<JobDetail>()
+            modelBuilder.Entity<JobHistory>()
                 .HasRequired(c => c.JobList)
+                .WithMany()
+                .WillCascadeOnDelete(true);
+            modelBuilder.Entity<AdminAccount>()
+                .HasRequired(c => c.UserAccount)
                 .WithMany()
                 .WillCascadeOnDelete(true);
             base.OnModelCreating(modelBuilder);

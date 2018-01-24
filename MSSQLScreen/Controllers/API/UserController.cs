@@ -17,7 +17,7 @@ namespace MSSQLScreen.Controllers.API
             _context = new ApplicationDbContext();
         }
 
-        [APIAuthorize]
+        [APIAuthorize(Roles = "SUPERADMIN")]
         [HttpGet]
         [Route("api/admin/adminlist")]
         public IEnumerable<AdminAccount> UserList()
@@ -26,7 +26,7 @@ namespace MSSQLScreen.Controllers.API
             return userInDb;
         }
 
-        [APIAuthorize]
+        [APIAuthorize(Roles ="SUPERADMIN")]
         [HttpGet]
         [Route("api/admin/{admin_id}")]
         public IEnumerable<AdminLog> LoginHistory(int admin_id)
@@ -34,13 +34,13 @@ namespace MSSQLScreen.Controllers.API
             return _context.AdminLogs.Where(c => c.AdminAccountId == admin_id).ToList();
         }
 
-        [APIAuthorize]
+        [APIAuthorize(Roles = "SUPERADMIN")]
         [HttpPost]
         [Route("api/admin/addadmin")]
-        public void AddAdmin(AddAdminViewModel admin)
+        public IHttpActionResult AddAdmin(AddAdminViewModel admin)
         {
             var usr = _context.UserAccounts.SingleOrDefault(c => c.Username == admin.Username);
-            var adm = _context.AdminAccounts.SingleOrDefault(c => c.Username == admin.Username);
+            var adm = _context.AdminAccounts.SingleOrDefault(c => c.UserAccountId == usr.Id);
             if (!ModelState.IsValid)
                 throw new HttpResponseException(HttpStatusCode.BadRequest);
             if (usr == null)
@@ -51,14 +51,12 @@ namespace MSSQLScreen.Controllers.API
             {
                 var addadmin = new AdminAccount
                 {
-                    Name = usr.Name,
-                    NIP = usr.NIP,
-                    Username = usr.Username,
-                    Password = usr.Password,
+                    UserAccountId = usr.Id,
                     Privilege = "ADMIN"
                 };
                 _context.AdminAccounts.Add(addadmin);
                 _context.SaveChanges();
+                return Ok();
             }
 
         }
@@ -66,7 +64,7 @@ namespace MSSQLScreen.Controllers.API
         [APIAuthorize]
         [HttpPut]
         [Route("api/admin/{admin_id}")]
-        public void FirebaseToken(int admin_id, FirebaseTokenViewModel frbs)
+        public IHttpActionResult FirebaseToken(int admin_id, FirebaseTokenViewModel frbs)
         {
             var admin = _context.AdminAccounts.SingleOrDefault(c => c.Id == admin_id);
             if (admin == null)
@@ -75,13 +73,14 @@ namespace MSSQLScreen.Controllers.API
             {
                 admin.FirebaseToken = frbs.Token;
                 _context.SaveChanges();
+                return Ok();
             }          
         }
 
         [APIAuthorize]
         [HttpPut]
         [Route("api/login/{admin_id}")]
-        public void IsOnline(int admin_id)
+        public IHttpActionResult IsOnline(int admin_id)
         {
             var admin = _context.AdminAccounts.SingleOrDefault(c => c.Id == admin_id);
             if (admin == null)
@@ -90,13 +89,14 @@ namespace MSSQLScreen.Controllers.API
             {
                 admin.IsOnline = 1;
                 _context.SaveChanges();
+                return Ok();
             }
         }
 
         [APIAuthorize]
         [HttpPut]
         [Route("api/logout/{admin_id}")]
-        public void IsNotOnline(int admin_id)
+        public IHttpActionResult IsNotOnline(int admin_id)
         {
             var admin = _context.AdminAccounts.SingleOrDefault(c => c.Id == admin_id);
             if (admin == null)
@@ -105,6 +105,7 @@ namespace MSSQLScreen.Controllers.API
             {
                 admin.IsOnline = 0;
                 _context.SaveChanges();
+                return Ok();
             }
         }
     }

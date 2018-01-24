@@ -341,18 +341,11 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="AuthorizationServerProvider.cs" />
-    <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\API\HashingController.cs" />
     <Compile Include="Controllers\API\JobController.cs" />
     <Compile Include="Controllers\API\ResourceController.cs" />
     <Compile Include="Controllers\API\ServerController.cs" />
     <Compile Include="Controllers\API\UserController.cs" />
-    <Compile Include="Controllers\DownloadController.cs" />
-    <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\JobController.cs" />
-    <Compile Include="Controllers\ManageController.cs" />
-    <Compile Include="Controllers\ResourceController.cs" />
-    <Compile Include="Controllers\ServerController.cs" />
-    <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -459,16 +452,37 @@
     <Compile Include="Migrations\201712071445460_FirebaseTokenandStatusServer.Designer.cs">
       <DependentUpon>201712071445460_FirebaseTokenandStatusServer.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201801131520209_AddTotalMemory.cs" />
+    <Compile Include="Migrations\201801131520209_AddTotalMemory.Designer.cs">
+      <DependentUpon>201801131520209_AddTotalMemory.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201801131523258_RenameJobDetail.cs" />
+    <Compile Include="Migrations\201801131523258_RenameJobDetail.Designer.cs">
+      <DependentUpon>201801131523258_RenameJobDetail.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201801230900416_EditUserFlow.cs" />
+    <Compile Include="Migrations\201801230900416_EditUserFlow.Designer.cs">
+      <DependentUpon>201801230900416_EditUserFlow.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201801231059045_test1.cs" />
+    <Compile Include="Migrations\201801231059045_test1.Designer.cs">
+      <DependentUpon>201801231059045_test1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201801231528193_test2.cs" />
+    <Compile Include="Migrations\201801231528193_test2.Designer.cs">
+      <DependentUpon>201801231528193_test2.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\AddAdminViewModel.cs" />
     <Compile Include="Models\AddServerViewModel.cs" />
+    <Compile Include="Models\AddUserViewModel.cs" />
     <Compile Include="Models\AdminAccount.cs" />
     <Compile Include="Models\DiskUsage.cs" />
     <Compile Include="Models\FirebaseTokenViewModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\JobList.cs" />
-    <Compile Include="Models\JobDetail.cs" />
+    <Compile Include="Models\JobHistory.cs" />
     <Compile Include="Models\AdminLog.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\ResourceUsage.cs" />
@@ -2629,51 +2643,20 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Home\About.cshtml" />
-    <Content Include="Views\Home\Contact.cshtml" />
-    <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\Account\_ExternalLoginsListPartial.cshtml" />
-    <Content Include="Views\Account\ConfirmEmail.cshtml" />
-    <Content Include="Views\Account\ExternalLoginConfirmation.cshtml" />
-    <Content Include="Views\Account\ExternalLoginFailure.cshtml" />
-    <Content Include="Views\Account\ForgotPassword.cshtml" />
-    <Content Include="Views\Account\ForgotPasswordConfirmation.cshtml" />
-    <Content Include="Views\Account\Login.cshtml" />
-    <Content Include="Views\Account\Register.cshtml" />
-    <Content Include="Views\Account\ResetPassword.cshtml" />
-    <Content Include="Views\Account\ResetPasswordConfirmation.cshtml" />
-    <Content Include="Views\Account\SendCode.cshtml" />
-    <Content Include="Views\Account\VerifyCode.cshtml" />
-    <Content Include="Views\Manage\AddPhoneNumber.cshtml" />
-    <Content Include="Views\Manage\ChangePassword.cshtml" />
-    <Content Include="Views\Manage\Index.cshtml" />
-    <Content Include="Views\Manage\ManageLogins.cshtml" />
-    <Content Include="Views\Manage\SetPassword.cshtml" />
-    <Content Include="Views\Manage\VerifyPhoneNumber.cshtml" />
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
-    <Content Include="Views\Job\GetJob.cshtml" />
-    <Content Include="Views\Job\JobHistory.cshtml" />
-    <Content Include="Views\Resource\CPUMemoryUsage2.cshtml" />
     <Content Include="Views\Shared\_Layout_Login.cshtml" />
-    <Content Include="Views\User\Login.cshtml" />
-    <Content Include="Views\User\Register.cshtml" />
-    <Content Include="Views\User\Index.cshtml" />
-    <Content Include="Views\User\LoginHistory.cshtml" />
     <Content Include="Views\Shared\Master\_Layout_Home.cshtml" />
     <Content Include="Views\Shared\Partial\_Header.cshtml" />
     <Content Include="Views\Shared\Partial\_Sidebar-Superadmin.cshtml" />
     <Content Include="Views\Shared\Partial\_Modal-Addadmin.cshtml" />
     <Content Include="Views\Shared\Partial\_Modal-Addserver.cshtml" />
     <Content Include="Views\Shared\Partial\_Modal-Error.cshtml" />
-    <Content Include="Views\Resource\CPUMemoryUsage.cshtml" />
     <Content Include="Views\Shared\Partial\_Sidebar-Admin.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Scripts\Highcharts-5.0.14\api\css\images\" />
-    <Folder Include="Views\Download\" />
-    <Folder Include="Views\Server\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
@@ -2753,6 +2736,21 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201712071445460_FirebaseTokenandStatusServer.resx">
       <DependentUpon>201712071445460_FirebaseTokenandStatusServer.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201801131520209_AddTotalMemory.resx">
+      <DependentUpon>201801131520209_AddTotalMemory.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201801131523258_RenameJobDetail.resx">
+      <DependentUpon>201801131523258_RenameJobDetail.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201801230900416_EditUserFlow.resx">
+      <DependentUpon>201801230900416_EditUserFlow.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201801231059045_test1.resx">
+      <DependentUpon>201801231059045_test1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201801231528193_test2.resx">
+      <DependentUpon>201801231528193_test2.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

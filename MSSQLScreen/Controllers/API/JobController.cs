@@ -121,7 +121,7 @@ namespace MSSQLScreen.Controllers.API
         [APIAuthorize]
         [HttpGet]
         [Route("api/job/{server_id}/{job_id}")]
-        public IEnumerable<JobDetail> GetJobHistory(int server_id, int job_id)
+        public IEnumerable<JobHistory> GetJobHistory(int server_id, int job_id)
         {
             //Delete job history in MSSQLScreen table
             var jobhistoryInDb = _context.JobDetails.Where(c => c.JobListId == job_id).ToList();
@@ -147,7 +147,7 @@ namespace MSSQLScreen.Controllers.API
 
             foreach (DataRow row in jobhistories.Rows.Cast<DataRow>())
             {
-                var jobrunhistory = new JobDetail
+                var jobrunhistory = new JobHistory
                 {
                     JobId = joblistInDb.JobId,
                     RunDate = row["RunDate"].ToString(),

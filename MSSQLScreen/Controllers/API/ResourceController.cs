@@ -12,7 +12,8 @@ namespace MSSQLScreen.Controllers.API
     {
         private ApplicationDbContext _context;
 
-        private static int availableMemory, cpuUsage;
+        private static long memoryUsage, totalMemory;
+        private static int cpuUsage;
         private string[] driveName;
         private static long availableSpace, totalSpace;
 
@@ -39,10 +40,22 @@ namespace MSSQLScreen.Controllers.API
                     {
                         while (reader.Read())
                         {
-                            availableMemory = Convert.ToInt32(reader[0]) / 1024;
+                            memoryUsage = Convert.ToInt32(reader[0]) / 1024;
                         }
                     }
                         
+                }
+
+                using (SqlCommand cmd = new SqlCommand("SELECT total_physical_memory_kb FROM sys.dm_os_sys_memory", sql))
+                {
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            totalMemory = Convert.ToInt32(reader[0]) / 1024;
+                        }
+                    }
+
                 }
 
                 using (SqlCommand cmd = new SqlCommand("sp_monitor", sql))
@@ -181,8 +194,9 @@ namespace MSSQLScreen.Controllers.API
 
                 var usage = new ResourceUsage
                 {
-                    CPUBusy = cpuUsage,
-                    AvailableMemory = availableMemory,
+                    CPUUsage = cpuUsage,
+                    MemoryUsage = memoryUsage,
+                    TotalMemory = totalMemory,
                     ServerListId = server_id
                 };
                 _context.ResourceUsages.Add(usage);
@@ -190,8 +204,9 @@ namespace MSSQLScreen.Controllers.API
             }
             else
             {
-                resourceInDB.CPUBusy = cpuUsage;
-                resourceInDB.AvailableMemory = availableMemory;
+                resourceInDB.CPUUsage = cpuUsage;
+                resourceInDB.MemoryUsage = memoryUsage;
+                resourceInDB.TotalMemory = totalMemory;
                 _context.SaveChanges();
             }
 

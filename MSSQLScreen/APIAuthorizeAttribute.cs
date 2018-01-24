@@ -1,5 +1,6 @@
 ﻿using System.Web;
 using System.Web.Http.Controllers;
+using System.Net.Http;
 
 namespace MSSQLScreen
 {
@@ -9,6 +10,8 @@ namespace MSSQLScreen
         {
             if (!HttpContext.Current.User.Identity.IsAuthenticated)
                 base.HandleUnauthorizedRequest(actionContext);
+            else
+                actionContext.Response = new HttpResponseMessage(System.Net.HttpStatusCode.Forbidden);
         }
     }
 }

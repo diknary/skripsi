@@ -16,6 +16,8 @@ namespace MSSQLScreen.Models
         [DataType(DataType.Password)]
         public string Password { get; set; }
 
+        public string Salt { get; set; }
+
         public bool IsActive { get; set; }
     }
 }

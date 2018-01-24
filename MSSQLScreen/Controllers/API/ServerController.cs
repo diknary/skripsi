@@ -5,6 +5,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Net;
 using System.Security.Claims;
+using System.Security.Cryptography;
 using System.Web.Http;
 
 namespace MSSQLScreen.Controllers.API
@@ -35,6 +36,40 @@ namespace MSSQLScreen.Controllers.API
             }
         }
 
+        private static byte[] CreateRandomSalt(int length)
+        {
+
+            byte[] randBytes;
+
+            if (length >= 1)
+            {
+                randBytes = new byte[length];
+            }
+            else
+            {
+                randBytes = new byte[1];
+            }
+
+            RNGCryptoServiceProvider rand = new RNGCryptoServiceProvider();
+
+            rand.GetBytes(randBytes);
+
+            return randBytes;
+        }
+
+        private static void ClearBytes(byte[] buffer)
+        {
+            if (buffer == null)
+            {
+                throw new ArgumentException("buffer");
+            }
+
+            for (int x = 0; x < buffer.Length; x++)
+            {
+                buffer[x] = 0;
+            }
+        }
+
         [APIAuthorize]
         [HttpGet]
         [Route("api/server")]
@@ -45,10 +80,28 @@ namespace MSSQLScreen.Controllers.API
         }
 
         [APIAuthorize]
+        [HttpGet]
+        [Route("api/server/server_id")]
+        public IHttpActionResult Connect(int server_id)
+        {
+            var getserver = _context.ServerLists.SingleOrDefault(c => c.Id == server_id);
+            if (getserver == null)
+                throw new HttpResponseException(HttpStatusCode.NotFound);
+            else
+            {
+                if (ValidateConnection(getserver.IPAddress, getserver.UserId, getserver.Password))
+                    return StatusCode(HttpStatusCode.Accepted);
+                else
+                    throw new HttpResponseException(HttpStatusCode.NotAcceptable);
+            }
+        }
+
+        [APIAuthorize(Roles = "SUPERADMIN")]
         [HttpPost]
         [Route("api/server/connect")]
-        public IHttpActionResult Connect(AddServerViewModel server)
+        public IHttpActionResult AddServer(AddServerViewModel server)
         {
+
             if (ModelState.IsValid)
             {
                 if (ValidateConnection(server.IPAddress, server.UserId, server.Password))
@@ -56,22 +109,54 @@ namespace MSSQLScreen.Controllers.API
                     var getserver = _context.ServerLists.SingleOrDefault(c => c.IPAddress == server.IPAddress);
                     if (getserver != null)
                     {
-                        getserver.UserId = server.UserId;
-                        getserver.Password = server.Password;
-                        _context.SaveChanges();
+                        TripleDESCryptoServiceProvider tdes = new TripleDESCryptoServiceProvider();
+
+                        try
+                        {
+                            PasswordDeriveBytes pdb = new PasswordDeriveBytes(server.Password, Convert.FromBase64String(getserver.Salt));
+
+                            tdes.Key = pdb.CryptDeriveKey("TripleDES", "SHA1", 192, tdes.IV);
+
+                            getserver.UserId = server.UserId;
+                            getserver.Password = Convert.ToBase64String(tdes.Key);
+                            _context.SaveChanges();
+                        }
+                        finally
+                        {
+                            tdes.Clear();
+                        }
+
                         return StatusCode(HttpStatusCode.Accepted);
                     }
                     else
                     {
-                        var addserver = new ServerList
-                        {
-                            IPAddress = server.IPAddress,
-                            UserId = server.UserId,
-                            Password = server.Password
-                        };
+                        byte[] salt = CreateRandomSalt(10);
 
-                        _context.ServerLists.Add(addserver);
-                        _context.SaveChanges();
+                        TripleDESCryptoServiceProvider tdes = new TripleDESCryptoServiceProvider();
+
+                        try
+                        {
+                            PasswordDeriveBytes pdb = new PasswordDeriveBytes(server.Password, salt);
+
+                            tdes.Key = pdb.CryptDeriveKey("TripleDES", "SHA1", 192, tdes.IV);
+
+                            var addserver = new ServerList
+                            {
+                                IPAddress = server.IPAddress,
+                                UserId = server.UserId,
+                                Password = Convert.ToBase64String(tdes.Key),
+                                Salt = Convert.ToBase64String(salt)
+                            };
+
+                            _context.ServerLists.Add(addserver);
+                            _context.SaveChanges();
+                        }
+                        finally
+                        {
+                            ClearBytes(salt);
+                            tdes.Clear();
+                        }
+                        
                         return StatusCode(HttpStatusCode.Accepted);
                     }
 
@@ -88,10 +173,10 @@ namespace MSSQLScreen.Controllers.API
             }
         }
 
-        [APIAuthorize]
+        [APIAuthorize(Roles = "SUPERADMIN")]
         [HttpDelete]
         [Route("api/server/remove/{server_id}")]
-        public void Remove(int server_id)
+        public IHttpActionResult Remove(int server_id)
         {
             var getserver = _context.ServerLists.SingleOrDefault(c => c.Id == server_id);
             if (getserver == null)
@@ -100,6 +185,7 @@ namespace MSSQLScreen.Controllers.API
             {
                 _context.ServerLists.Remove(getserver);
                 _context.SaveChanges();
+                return Ok();
             }          
         }
     }

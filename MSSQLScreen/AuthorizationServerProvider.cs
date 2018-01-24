@@ -6,6 +6,7 @@ using System.Security.Claims;
 using Microsoft.Owin.Security;
 using System.Collections.Generic;
 using System;
+using System.Security.Cryptography;
 
 namespace MSSQLScreen
 {
@@ -16,6 +17,20 @@ namespace MSSQLScreen
         public AuthorizationServerProvider()
         {
             _context = new ApplicationDbContext();
+        }
+
+        private int ValidateUser(string username, string password)
+        {
+            var usr = _context.UserAccounts.SingleOrDefault(c => c.Username == username);
+            TripleDESCryptoServiceProvider tdes = new TripleDESCryptoServiceProvider();
+            PasswordDeriveBytes pdb = new PasswordDeriveBytes(password, Convert.FromBase64String(usr.Salt));
+
+            tdes.Key = pdb.CryptDeriveKey("TripleDES", "SHA1", 192, tdes.IV);
+
+            if (Convert.ToBase64String(tdes.Key) == usr.Password)
+                return usr.Id;
+            else
+                return 0;
         }
 
         private void CreateLoginHistory(int id)
@@ -32,9 +47,10 @@ namespace MSSQLScreen
 
         private void GetLastLogin(string username)
         {
-            var getUser = _context.AdminAccounts.Single(c => c.Username == username);
-            var getLastLogin = _context.AdminLogs.Where(c => c.AdminAccountId == getUser.Id).OrderByDescending(c => c.Id).FirstOrDefault();
-            getUser.LastLogin = getLastLogin.LoginDate;
+            var getUser = _context.UserAccounts.Single(c => c.Username == username);
+            var getAdmin = _context.AdminAccounts.Single(c => c.UserAccountId == getUser.Id);
+            var getLastLogin = _context.AdminLogs.Where(c => c.AdminAccountId == getAdmin.Id).OrderByDescending(c => c.Id).FirstOrDefault();
+            getAdmin.LastLogin = getLastLogin.LoginDate;
             _context.SaveChanges();
         }
 
@@ -55,35 +71,45 @@ namespace MSSQLScreen
 
         public override async Task GrantResourceOwnerCredentials(OAuthGrantResourceOwnerCredentialsContext client)
         {
-            var usrInDb = _context.AdminAccounts.SingleOrDefault(c => c.Username == client.UserName && c.Password == client.Password);
-            var identity = new ClaimsIdentity(client.Options.AuthenticationType);
-            
-            if (usrInDb == null)
+            int userId = ValidateUser(client.UserName, client.Password);
+            if (userId ==  0)
             {
-                client.SetError("access_token", "null");
+                client.SetError("Login failed", "Username/password is wrong");
                 return;
             }
             else
             {
-                var props = new AuthenticationProperties(new Dictionary<string, string>
+                var admInDb = _context.AdminAccounts.SingleOrDefault(c => c.UserAccountId == userId);
+                var identity = new ClaimsIdentity(client.Options.AuthenticationType);
+
+                if (admInDb == null)
                 {
+                    client.SetError("Not Found", "Admin is not exist");
+                    return;
+                }
+                else
+                {
+                    var usr = _context.UserAccounts.Single(c => c.Id == userId);
+                    var props = new AuthenticationProperties(new Dictionary<string, string>
                     {
-                        "name", usrInDb.Name
-                    },
-                    {
-                        "admin_id", usrInDb.Id.ToString()
-                    },
-                    {
-                        "status", usrInDb.Privilege
-                    }
+                        {
+                            "name", usr.Name
+                        },
+                        {
+                            "admin_id", usr.Id.ToString()
+                        },
+                        {
+                            "status", admInDb.Privilege
+                        }
 
-                });
-                var ticket = new AuthenticationTicket(identity, props);
+                    });
+                    identity.AddClaim(new Claim(ClaimTypes.Role, admInDb.Privilege));
+                    var ticket = new AuthenticationTicket(identity, props);
 
-                CreateLoginHistory(usrInDb.Id);
-                GetLastLogin(client.UserName);
-
-                client.Validated(ticket);
+                    CreateLoginHistory(admInDb.Id);
+                    GetLastLogin(client.UserName);
+                    client.Validated(ticket);
+                }
             }
         }
     }
