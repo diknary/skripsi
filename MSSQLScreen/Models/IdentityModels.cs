@@ -51,6 +51,10 @@ namespace MSSQLScreen.Models
                 .HasRequired(c => c.UserAccount)
                 .WithMany()
                 .WillCascadeOnDelete(true);
+            modelBuilder.Entity<AdminLog>()
+                .HasRequired(c => c.AdminAccount)
+                .WithMany()
+                .WillCascadeOnDelete(true);
             base.OnModelCreating(modelBuilder);
         }
 

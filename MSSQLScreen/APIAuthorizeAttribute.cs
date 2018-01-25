@@ -11,7 +11,10 @@ namespace MSSQLScreen
             if (!HttpContext.Current.User.Identity.IsAuthenticated)
                 base.HandleUnauthorizedRequest(actionContext);
             else
-                actionContext.Response = new HttpResponseMessage(System.Net.HttpStatusCode.Forbidden);
+                actionContext.Response = new HttpResponseMessage(System.Net.HttpStatusCode.Forbidden)
+                {
+                    Content = new StringContent("Privilege level must be SUPERADMIN")
+                };
         }
     }
 }

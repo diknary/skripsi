@@ -80,8 +80,9 @@ namespace MSSQLScreen.Controllers.API
         }
 
         [APIAuthorize]
-        [HttpPost]
-        [Route("api/server/server_id")]
+        [HttpsAuthorize]
+        [HttpGet]
+        [Route("api/server/{server_id}")]
         public IHttpActionResult Connect(int server_id)
         {
             var getserver = _context.ServerLists.SingleOrDefault(c => c.Id == server_id);
@@ -106,6 +107,7 @@ namespace MSSQLScreen.Controllers.API
         }
 
         [APIAuthorize(Roles = "SUPERADMIN")]
+        [HttpsAuthorize]
         [HttpPost]
         [Route("api/server/connect")]
         public IHttpActionResult AddServer(AddServerViewModel server)

@@ -5,6 +5,7 @@ using System.Data.SqlClient;
 using System;
 using System.Data;
 using System.Collections.Generic;
+using System.Text;
 
 namespace MSSQLScreen.Controllers.API
 {
@@ -27,11 +28,11 @@ namespace MSSQLScreen.Controllers.API
         [Route("api/resource/{server_id}")]
         public IHttpActionResult GetResources(int server_id)
         {
-
             var getserver = _context.ServerLists.Single(c => c.Id == server_id);
+            byte[] dcrpt = Convert.FromBase64String(getserver.Password);
             var resourceInDB = _context.ResourceUsages.SingleOrDefault(c => c.ServerListId == server_id);
 
-            using (SqlConnection sql = new SqlConnection("server=" + getserver.IPAddress + ";" + "user id=" + getserver.UserId + ";" + "password=" + getserver.Password + ";"))
+            using (SqlConnection sql = new SqlConnection("server=" + getserver.IPAddress + ";" + "user id=" + getserver.UserId + ";" + "password=" + ASCIIEncoding.ASCII.GetString(dcrpt) + ";"))
             {
                 sql.Open();
                 using (SqlCommand cmd = new SqlCommand("SELECT physical_memory_in_use_kb FROM sys.dm_os_process_memory", sql))
